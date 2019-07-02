@@ -1,0 +1,41 @@
+:host {
+  height: 100%;
+  width: 100%;
+  --color-black: #000;
+  --color-black-light: #242424;
+  --color-grey-darker: #424242;
+  --color-grey-dark: #666;
+  --color-grey: #999;
+  --color-grey-light: #CCC;
+  --color-white: #FFF;
+  --color-accent: #7799DD;
+  --color-error: #EE224499;
+  --border-default: 1px solid var(--color-grey);
+  --border-radius: 4px;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.main-container {
+  max-width: 720px;
+  margin: 16px auto;
+  font-family: Hack, monospace;
+}
+
+.title {
+  text-align: center;
+  font-weight: unset;
+  font-size: 42px;
+}
+
+.title-italic {
+  font-style: italic;
+}
+
+.text-block {
+  font-size: 18px;
+  margin: 16px 0;
+}

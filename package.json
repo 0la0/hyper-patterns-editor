@@ -1,0 +1,26 @@
+{
+  "name": "ps-markup-editor",
+  "version": "0.0.1",
+  "description": "Editor for ps-markup",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "start": "webpack-dev-server -r esm --mode=development --inline --colors --progress --content-base src",
+    "test": "NODE_PATH=./src/app mocha -r esm test/**/*.test.js",
+    "lint": "eslint src"
+  },
+  "devDependencies": {
+    "eslint": "^6.0.0-alpha.0",
+    "esm": "^3.2.22",
+    "mocha": "^6.1.4",
+    "raw-loader": "^2.0.0",
+    "webpack": "^4.34.0",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.4.1"
+  },
+  "dependencies": {
+    "codemirror": "^5.48.0",
+    "live-dom": "../live-vdom",
+    "ps-markup": "../ps-markup"
+  }
+}

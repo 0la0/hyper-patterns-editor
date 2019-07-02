@@ -1,0 +1,13 @@
+.text-input {
+  display: block;
+  font-size: 1em;
+  width: 100%;
+  background-color: var(--color-black-light);
+  border: none;
+  border-bottom: 1px solid var(--color-grey-light);
+  outline: none;
+  color: var(--color-grey-light);
+}
+.text-input:focus {
+  outline: none;
+}
