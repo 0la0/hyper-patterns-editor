@@ -1,4 +1,5 @@
 import App from '../app';
+import CodemirrorWrapper from '../codemirror-wrapper';
 import EditorRoot from '../editor-root';
 import Primitives from '../primitives';
 
@@ -10,6 +11,7 @@ const components = [
   Primitives.RouterOutlet,
   Primitives.TextInput,
   App,
+  CodemirrorWrapper,
   EditorRoot
 ];
 
