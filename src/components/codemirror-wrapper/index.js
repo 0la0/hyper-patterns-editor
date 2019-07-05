@@ -12,11 +12,24 @@ import codeMirrorStyleOverrides from './code-mirror-overrides.css';
 
 const styles = `${componentStyles} ${codeMirrorStylesheet} ${codeMirrorTheme} ${codeMirrorStyleOverrides}`;
 
+const testValue = `
+<ps-dac>
+  <ps-gain value="0.1">
+    <ps-env-osc wav="squ" attack="0" sustain="0" release="40" trigger="a"></ps-env-osc>
+  </ps-gain>
+</ps-dac>
+<ps-seq>
+  <ps-pat-mod speed="0.5" degrade="0.5">
+    <ps-pat-midi pattern="a:52 a:60 a:65 a:72"></ps-pat-midi>
+    <ps-pat-midi pattern="a a a"></ps-pat-midi>
+  </ps-pat-mod>
+</ps-seq>`;
+
 const codeMirrorOptions = {
   mode: 'jsx',
   autoCloseBrackets: true,
   matchBrackets: true,
-  value: '',
+  value: testValue,
   lineWrapping: false,
   tabSize: 2,
   lineNumbers: true,
@@ -45,16 +58,14 @@ export default class CodeMirrorWrapper extends BaseComponent {
       'Ctrl-]': cm => console.log('ctrl-]', cm),
       'Ctrl-]': cm => console.log('ctrl-]', cm),
       'Ctrl-/': cm => console.log('ctrl-/', cm),
-      'Ctrl-Enter': cm => {
-        this.delegate.handleSubmit(cm.getValue());
-        // console.log('submit', cm, cm.getValue());
-      }
+      'Ctrl-Enter': cm => this.delegate.handleSubmit(cm.getValue())
     };
-    const codeMirror = CodeMirror(this.dom.editorContainer, Object.assign(codeMirrorOptions, { extraKeys: keyBindings, }));
-    codeMirror.setSize('100%', '100%');
+    this.codeMirror = CodeMirror(this.dom.editorContainer, Object.assign(codeMirrorOptions, { extraKeys: keyBindings, }));
+    this.codeMirror.setSize('100%', '100%');
   }
 
   setDelegate(delegate) {
     this.delegate = delegate;
+    this.delegate.handleSubmit(this.codeMirror.getValue());
   }
 }

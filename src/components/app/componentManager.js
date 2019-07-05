@@ -15,4 +15,6 @@ const components = [
   EditorRoot
 ];
 
-components.forEach(component => customElements.define(component.tag, component));
+export default function init() {
+  components.forEach(component => customElements.define(component.tag, component));
+}
