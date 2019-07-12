@@ -7,12 +7,9 @@ export default class TabWindow {
     this.tabContainer = tabContainer;
     this.windowContainer = windowContainer;
 
-    this.liveDomNode = document.createElement('div');
-    this.liveDom = new LiveDom({ domNode: this.liveDomNode });
-    const handleSubmit = val => {
-      console.log('handleSubmit', val)
-      this.liveDom.setHtml(val);
-    };
+    this.liveDom = new LiveDom({ domNode: document.createElement('div') });
+    const handleSubmit = val => this.liveDom.setHtml(val);
+    document.body.appendChild(this.liveDom.domNode);
 
     this.tab = new EditorTab(label, this.handleTabClick.bind(this), this.handleTabRemove.bind(this));
     this.codemirrorWrapper = new CodeMirrorWrapper(handleSubmit);
@@ -33,7 +30,6 @@ export default class TabWindow {
   _removeSelf() {
     this.tabContainer.removeChild(this.tab);
     this.windowContainer.removeChild(this.codemirrorWrapper);
-    this.liveDomNode = null;
     // TODO: this.liveDom.destroy();
   }
 

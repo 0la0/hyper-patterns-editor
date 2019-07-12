@@ -35,9 +35,7 @@ const codeMirrorOptions = {
   styleActiveLine: true,
   autofocus: true,
   theme: 'tomorrow-night-bright',
-  extraKeys: {
-    
-  },
+  extraKeys: {},
 };
 
 export default class CodeMirrorWrapper extends BaseComponent {
@@ -66,7 +64,6 @@ export default class CodeMirrorWrapper extends BaseComponent {
     setTimeout(() => {
       this.codeMirror.refresh();
       this.dom.cm = this.dom.editorContainer.children[0];
-      console.log('cm', this.dom.cm)
     });
   }
 
@@ -74,7 +71,6 @@ export default class CodeMirrorWrapper extends BaseComponent {
     if (!obj.dataStore || !obj.dataStore.fontSize) {
       return;
     }
-    console.log('fontSize:', obj.dataStore.fontSize, this.codeMirror);
     this.dom.cm.style.setProperty('font-size', `${obj.dataStore.fontSize}px`);
   }
 }
