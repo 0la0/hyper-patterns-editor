@@ -1,9 +1,7 @@
 import CodeMirror from 'codemirror';
-import 'codemirror/mode/jsx/jsx';
-import 'codemirror/addon/hint/javascript-hint';
-import 'codemirror/addon/hint/html-hint';
-import 'codemirror/addon/hint/show-hint';
 import BaseComponent from '../primitives/util/base-component';
+import Subscription from '../../services/EventBus/Subscription';
+import { eventBus } from '../../services/EventBus';
 import markup from './editor-root.html';
 import componentStyles from './editor-root.css';
 import codeMirrorStylesheet from './code-mirror-stylesheet.css';
@@ -35,7 +33,7 @@ const codeMirrorOptions = {
   lineNumbers: true,
   cursorBlinkRate: 530,
   styleActiveLine: true,
-  autofocus: false,
+  autofocus: true,
   theme: 'tomorrow-night-bright',
   extraKeys: {
     
@@ -47,8 +45,10 @@ export default class CodeMirrorWrapper extends BaseComponent {
     return 'codemirror-wrapper';
   }
 
-  constructor() {
+  constructor(handleSubmit) {
     super(styles, markup, [ 'editorContainer' ]);
+    this.handleSubmit = handleSubmit || (() => console.log('Submit not defined'));
+    this.dataStoreSubscription = new Subscription('DATA_STORE', this.handleDataStoreUpdate.bind(this));
   }
 
   connectedCallback() {
@@ -58,14 +58,23 @@ export default class CodeMirrorWrapper extends BaseComponent {
       'Ctrl-]': cm => console.log('ctrl-]', cm),
       'Ctrl-]': cm => console.log('ctrl-]', cm),
       'Ctrl-/': cm => console.log('ctrl-/', cm),
-      'Ctrl-Enter': cm => this.delegate.handleSubmit(cm.getValue())
+      'Ctrl-Enter': cm => this.handleSubmit(cm.getValue())
     };
     this.codeMirror = CodeMirror(this.dom.editorContainer, Object.assign(codeMirrorOptions, { extraKeys: keyBindings, }));
     this.codeMirror.setSize('100%', '100%');
+    eventBus.subscribe(this.dataStoreSubscription);
+    setTimeout(() => {
+      this.codeMirror.refresh();
+      this.dom.cm = this.dom.editorContainer.children[0];
+      console.log('cm', this.dom.cm)
+    });
   }
 
-  setDelegate(delegate) {
-    this.delegate = delegate;
-    this.delegate.handleSubmit(this.codeMirror.getValue());
+  handleDataStoreUpdate(obj) {
+    if (!obj.dataStore || !obj.dataStore.fontSize) {
+      return;
+    }
+    console.log('fontSize:', obj.dataStore.fontSize, this.codeMirror);
+    this.dom.cm.style.setProperty('font-size', `${obj.dataStore.fontSize}px`);
   }
 }

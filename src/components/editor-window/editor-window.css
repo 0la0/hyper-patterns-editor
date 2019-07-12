@@ -1,0 +1,75 @@
+:host {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.tab-row {
+  height: 30px;
+  border-bottom: 2px solid var(--color-grey-darker);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tab-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-x: scroll;
+  padding: 0 4px;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.add-cycle {
+  cursor: pointer;
+  position: relative;
+  display: block;
+  margin: 0 8px 0 32px;
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: unset;
+  border: unset;
+  transition: background-color 0.15s ease;
+}
+.add-cycle:hover {
+  background-color: var(--color-grey-darker);
+}
+.add-cycle:hover > .add-cycle-bar {
+  background-color: var(--color-grey);
+}
+.add-cycle-bar {
+  background-color: var(--color-grey-dark);
+  width: 16px;
+  height: 2px;
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transition: background-color 0.15s ease;
+}
+.add-cycle-bar-1 {
+  transform: translate(-50%, -50%);
+}
+.add-cycle-bar-2 {
+  transform: translate(-50%, -50%) rotateZ(90deg);
+}
+
+.editor {
+  display: none;
+  flex: 1;
+}
+
+.editor-active {
+  display: block;
+}

@@ -1,3 +1,29 @@
-<p>Editor</p>
-<codemirror-wrapper id="editorTab"></codemirror-wrapper>
-<ps-toggle-button class="toggle-button"></ps-toggle-button>
+<div class="row top-row">
+  <!-- TODO: create topbar component -->
+  <div class="row">
+    <toggle-button
+      id="midiButton"
+      class="ctrl-button"
+      click="handleMidiClick"
+      onlabel="MIDI"
+      offlabel="MIDI">
+    </toggle-button>
+    <toggle-button
+      id="sampleButton"
+      class="ctrl-button"
+      click="handleSampleClick"
+      onlabel="Samples"
+      offlabel="Samples">
+    </toggle-button>
+    <toggle-button
+      id="settingsButton"
+      class="ctrl-button"
+      click="handleSettingsClick"
+      onlabel="Settings"
+      offlabel="Settings">
+    </toggle-button>
+  </div>
+  <metronome-ctrl></metronome-ctrl>
+  <ps-toggle-button class="toggle-button"></ps-toggle-button>
+</div>
+<editor-window class="editor-window"></editor-window>
