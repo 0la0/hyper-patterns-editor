@@ -1,4 +1,5 @@
 import 'ps-markup';
+import 'ps-viz-markup';
 
 import 'codemirror/mode/jsx/jsx';
 import 'codemirror/addon/hint/javascript-hint';

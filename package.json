@@ -21,6 +21,7 @@
   "dependencies": {
     "codemirror": "^5.48.0",
     "live-dom": "../live-vdom",
-    "ps-markup": "../ps-markup"
+    "ps-markup": "../ps-markup",
+    "ps-viz-markup": "../ps-viz-markup"
   }
 }

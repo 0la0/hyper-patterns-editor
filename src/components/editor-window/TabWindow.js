@@ -1,15 +1,32 @@
 import LiveDom from 'live-dom';
 import EditorTab from './editor-tab';
 import CodeMirrorWrapper from '../codemirror-wrapper';
+import GraphicsWindow from '../../services/GraphicsWindow';
 
+const isGraphics = true;
+
+let graphicsWindow;
+
+// TODO: create audio handler that wrapps liveDom;
 export default class TabWindow {
   constructor(label, tabContainer, windowContainer) {
     this.tabContainer = tabContainer;
     this.windowContainer = windowContainer;
 
     this.liveDom = new LiveDom({ domNode: document.createElement('div') });
-    const handleSubmit = val => this.liveDom.setHtml(val);
-    document.body.appendChild(this.liveDom.domNode);
+    if (!graphicsWindow) {
+      graphicsWindow = new GraphicsWindow();
+    }
+    const handleSubmit = val => {
+      if (isGraphics) {
+        graphicsWindow.setHtml(val);
+        return;
+      }
+      this.liveDom.setHtml(val);
+    };
+    if (!graphicsWindow) {
+      document.body.appendChild(this.liveDom.domNode);
+    }
 
     this.tab = new EditorTab(label, this.handleTabClick.bind(this), this.handleTabRemove.bind(this));
     this.codemirrorWrapper = new CodeMirrorWrapper(handleSubmit);

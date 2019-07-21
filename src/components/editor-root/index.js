@@ -30,18 +30,6 @@ export default class EditorRoot extends BaseComponent {
     });
   }
 
-  // connectedCallback() {
-  //   const domNode = document.createElement('div');
-  //   document.body.appendChild(domNode)
-  //   this.liveDom = new LiveDom({ domNode });
-  //   this.dom.editorTab.setDelegate({
-  //     handleSubmit: val => {
-  //       console.log('handleSubmit', val)
-  //       this.liveDom.setHtml(val);
-  //     }
-  //   });
-  // }
-
   connectedCallback() {
     GlobalListeners.init();
     eventBus.subscribe(this.eventBusSubscription);
