@@ -1,5 +1,6 @@
 import LiveDom from 'live-dom';
 
+// TODO: create <ps-viz-global-scene> that acts as a singleton
 function buildSceneComponent() {
   const scene = document.createElement('ps-viz-scene');
   scene.setAttribute('embed', '');
@@ -22,5 +23,9 @@ export default class GraphicsWindowProvider {
   setHtml(htmlString) {
     console.log('htmlString:', htmlString);
     this.liveDom.setHtml(htmlString);
+  }
+
+  destroy() {
+    // TODO
   }
 }

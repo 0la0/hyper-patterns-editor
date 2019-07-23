@@ -2,6 +2,8 @@ import BaseComponent from '../primitives/util/base-component';
 import { eventBus } from '../../services/EventBus';
 import Subscription from '../../services/EventBus/Subscription';
 import TabWindow from './TabWindow';
+import GraphicsWindow from '../../services/GraphicsWindow';
+import AudioTab from '../../services/AudioTab';
 import style from './editor-window.css';
 import markup from './editor-window.html';
 
@@ -32,16 +34,23 @@ export default class EditorWindow extends BaseComponent {
 
   connectedCallback() {
     eventBus.subscribe(this.keyShortcutSubscription);
+    this.buildDefaultTabs();
   }
 
   disconnectedCallback() {
     eventBus.unsubscribe(this.keyShortcutSubscription);
   }
 
-  addTab() {
+  buildDefaultTabs() {
+    this.addTab();
+    this.addTab(true);
+  }
+
+  addTab(isGraphicsTab = false) {
     const index = this.dom.tabContainer.children.length;
     const label = `tab${index + 1}`;
-    const tabWindow = new TabWindow(label, this.dom.tabContainer, this.dom.contentContainer)
+    const contentManager = isGraphicsTab ? new GraphicsWindow() : new AudioTab();
+    const tabWindow = new TabWindow(label, this.dom.tabContainer, this.dom.contentContainer, contentManager)
       .setHandleClick(this.handleTabClick.bind(this))
       .setHandleRemove(this.handleTabRemove.bind(this));
     this.tabs.push(tabWindow);

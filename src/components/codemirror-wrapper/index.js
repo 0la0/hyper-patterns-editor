@@ -10,35 +10,10 @@ import codeMirrorStyleOverrides from './code-mirror-overrides.css';
 
 const styles = `${componentStyles} ${codeMirrorStylesheet} ${codeMirrorTheme} ${codeMirrorStyleOverrides}`;
 
-// const testValue = `
-// <ps-dac>
-//   <ps-gain value="0.1">
-//     <ps-env-osc wav="squ" attack="0" sustain="0" release="40" trigger="a"></ps-env-osc>
-//   </ps-gain>
-// </ps-dac>
-// <ps-seq>
-//   <ps-pat-mod speed="0.5" degrade="0.5">
-//     <ps-pat-midi pattern="a:52 a:60 a:65 a:72"></ps-pat-midi>
-//     <ps-pat-midi pattern="a a a"></ps-pat-midi>
-//   </ps-pat-mod>
-// </ps-seq>`;
-
-const testValue = `
-<ps-viz-cone
-  position="-10 -10 0"
-  rotation="0 0 0"
-  scale="1 1 1"
-  color="0.5 0 0.8"
-  pos-vel="0 0 0"
-  rot-vel="1 0 0"
-  scale-vel="0 0 0"
-/>`;
-
-const codeMirrorOptions = {
+const defaultEditorOptions = {
   mode: 'jsx',
   autoCloseBrackets: true,
   matchBrackets: true,
-  value: testValue,
   lineWrapping: false,
   tabSize: 2,
   lineNumbers: true,
@@ -54,22 +29,27 @@ export default class CodeMirrorWrapper extends BaseComponent {
     return 'codemirror-wrapper';
   }
 
-  constructor(handleSubmit) {
+  constructor(handleSubmit, textContent = '') {
     super(styles, markup, [ 'editorContainer' ]);
     this.handleSubmit = handleSubmit || (() => console.log('Submit not defined'));
     this.dataStoreSubscription = new Subscription('DATA_STORE', this.handleDataStoreUpdate.bind(this));
+    this.textContent = textContent;
   }
 
   connectedCallback() {
-    const keyBindings = {
-      'Ctrl-N': cm => console.log('ctrl-n', cm),
-      'Ctrl-[': cm => console.log('ctrl-[', cm),
-      'Ctrl-]': cm => console.log('ctrl-]', cm),
-      'Ctrl-]': cm => console.log('ctrl-]', cm),
-      'Ctrl-/': cm => console.log('ctrl-/', cm),
-      'Ctrl-Enter': cm => this.handleSubmit(cm.getValue())
+    const codeMirrorOptions = {
+      ...defaultEditorOptions,
+      extraKeys: {
+        'Ctrl-N': cm => console.log('ctrl-n', cm),
+        'Ctrl-[': cm => console.log('ctrl-[', cm),
+        'Ctrl-]': cm => console.log('ctrl-]', cm),
+        'Ctrl-]': cm => console.log('ctrl-]', cm),
+        'Ctrl-/': cm => console.log('ctrl-/', cm),
+        'Ctrl-Enter': cm => this.handleSubmit(cm.getValue())
+      },
+      value: this.textContent,
     };
-    this.codeMirror = CodeMirror(this.dom.editorContainer, Object.assign(codeMirrorOptions, { extraKeys: keyBindings, }));
+    this.codeMirror = CodeMirror(this.dom.editorContainer, codeMirrorOptions);
     this.codeMirror.setSize('100%', '100%');
     eventBus.subscribe(this.dataStoreSubscription);
     setTimeout(() => {
