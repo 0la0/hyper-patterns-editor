@@ -59,9 +59,8 @@ export default class CodeMirrorWrapper extends BaseComponent {
   }
 
   handleDataStoreUpdate(obj) {
-    if (!obj.dataStore || !obj.dataStore.fontSize) {
-      return;
+    if (obj.dataStore && obj.dataStore.fontSize && this.dom.cm) {
+      this.dom.cm.style.setProperty('font-size', `${obj.dataStore.fontSize}px`);
     }
-    this.dom.cm.style.setProperty('font-size', `${obj.dataStore.fontSize}px`);
   }
 }

@@ -57,5 +57,4 @@ export default class EditorRoot extends BaseComponent {
   handleDataStoreUpdate(obj) {
     this.editorState.render(obj.dataStore.editorDrawer);
   }
-
 }

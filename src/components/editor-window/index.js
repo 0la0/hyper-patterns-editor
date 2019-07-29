@@ -2,7 +2,7 @@ import BaseComponent from '../primitives/util/base-component';
 import { eventBus } from '../../services/EventBus';
 import Subscription from '../../services/EventBus/Subscription';
 import TabWindow from './TabWindow';
-import GraphicsWindow from '../../services/GraphicsWindow';
+import provideGraphicsWindow from '../../services/GraphicsWindow';
 import AudioTab from '../../services/AudioTab';
 import style from './editor-window.css';
 import markup from './editor-window.html';
@@ -49,7 +49,8 @@ export default class EditorWindow extends BaseComponent {
   addTab(isGraphicsTab = false) {
     const index = this.dom.tabContainer.children.length;
     const label = `tab${index + 1}`;
-    const contentManager = isGraphicsTab ? new GraphicsWindow() : new AudioTab();
+    console.log('addTab', isGraphicsTab);
+    const contentManager = isGraphicsTab ? provideGraphicsWindow() : new AudioTab();
     const tabWindow = new TabWindow(label, this.dom.tabContainer, this.dom.contentContainer, contentManager)
       .setHandleClick(this.handleTabClick.bind(this))
       .setHandleRemove(this.handleTabRemove.bind(this));

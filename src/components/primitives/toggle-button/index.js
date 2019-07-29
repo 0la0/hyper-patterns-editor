@@ -34,6 +34,7 @@ export default class ToggleButton extends BaseComponent {
 
   handleClick(event) {
     this.isOn = !this.isOn;
+    event.target.value = this.isOn;
     this.onClick(event);
     this.render();
   }

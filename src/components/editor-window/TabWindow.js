@@ -9,7 +9,6 @@ export default class TabWindow {
     this.contentManager = contentManager;
     this.tab = new EditorTab(label, this.handleTabClick.bind(this), this.handleTabRemove.bind(this));
     const mockContent = contentManager.constructor.name === 'AudioTab' ? audioMock : graphicsMock;
-    console.log('mockContent', mockContent)
     this.codemirrorWrapper = new CodeMirrorWrapper(this.contentManager.setHtml.bind(this.contentManager), mockContent);
     this.tab.classList.add('tab');
     this.codemirrorWrapper.classList.add('editor');

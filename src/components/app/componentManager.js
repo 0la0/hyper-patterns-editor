@@ -3,6 +3,7 @@ import CodemirrorWrapper from '../codemirror-wrapper';
 import EditorRoot from '../editor-root';
 import EditorTab from '../editor-window/editor-tab';
 import EditorWindow from '../editor-window';
+import GraphicsWindowEditor from '../graphics-window-editor';
 import MidiEditor from '../midi-editor';
 import MidiDevice from '../midi-editor/midi-device';
 import Primitives from '../primitives';
@@ -24,6 +25,7 @@ const components = [
   EditorRoot,
   EditorTab,
   EditorWindow,
+  GraphicsWindowEditor,
   MidiEditor,
   MidiDevice,
   SampleDisplay,

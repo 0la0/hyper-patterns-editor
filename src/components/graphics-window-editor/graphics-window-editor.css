@@ -1,0 +1,58 @@
+:host {
+  --ctrl-size: 20px;
+  --half-ctrl: 10px;
+}
+
+.container {
+  border: 1px solid var(--color-grey-darker);
+  width: 100%;
+  height: 200px;
+  position: relative;
+}
+
+.resizable-rect {
+  border: 1px solid blue;
+  background-color: var(--color-grey);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50%;
+  height: 50%;
+}
+
+.resizable-ctrl {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-grey-light);
+  transition: background-color 0.2s ease;
+}
+.resizable-ctrl:hover {
+  background-color: var(--color-error);
+}
+
+.resizable-ctrl-nw {
+  left: 0;
+  top: 0;
+  /* cursor: nw-resize; */
+  /* background-color: red; */
+}
+
+.resizable-ctrl-ne {
+  right: 0;
+  top: 0;
+  /* cursor: ne-resize; */
+  /* background-color: pink; */
+}
+
+.resizable-ctrl-se {
+  right: 0;
+  bottom: 0;
+  cursor: se-resize;
+}
+
+.resizable-ctrl-sw {
+  left: 0;
+  bottom: 0;
+  cursor: sw-resize;
+}

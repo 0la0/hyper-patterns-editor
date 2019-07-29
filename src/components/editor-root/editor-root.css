@@ -12,6 +12,7 @@
   padding: 8px 4px;
   border-bottom: 2px solid var(--color-grey-darker);
   height: auto;
+  z-index: 1;
 }
 
 /* .toggle-button {
