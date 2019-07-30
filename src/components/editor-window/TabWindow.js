@@ -18,9 +18,12 @@ export default class TabWindow {
 
   setActive(isActive) {
     this.tab.setActive(isActive);
-    isActive ?
-      this.codemirrorWrapper.classList.add('editor-active') :
+    if (isActive) {
+      this.codemirrorWrapper.focus();
+      this.codemirrorWrapper.classList.add('editor-active');
+    } else {
       this.codemirrorWrapper.classList.remove('editor-active');
+    }
   }
 
   setHandleClick(onClick) {

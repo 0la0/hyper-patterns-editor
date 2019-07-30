@@ -21,7 +21,6 @@ const defaultEditorOptions = {
   styleActiveLine: true,
   autofocus: true,
   theme: 'tomorrow-night-bright',
-  extraKeys: {},
 };
 
 export default class CodeMirrorWrapper extends BaseComponent {
@@ -40,11 +39,6 @@ export default class CodeMirrorWrapper extends BaseComponent {
     const codeMirrorOptions = {
       ...defaultEditorOptions,
       extraKeys: {
-        'Ctrl-N': cm => console.log('ctrl-n', cm),
-        'Ctrl-[': cm => console.log('ctrl-[', cm),
-        'Ctrl-]': cm => console.log('ctrl-]', cm),
-        'Ctrl-]': cm => console.log('ctrl-]', cm),
-        'Ctrl-/': cm => console.log('ctrl-/', cm),
         'Ctrl-Enter': cm => this.handleSubmit(cm.getValue())
       },
       value: this.textContent,
@@ -62,5 +56,9 @@ export default class CodeMirrorWrapper extends BaseComponent {
     if (obj.dataStore && obj.dataStore.fontSize && this.dom.cm) {
       this.dom.cm.style.setProperty('font-size', `${obj.dataStore.fontSize}px`);
     }
+  }
+
+  focus() {
+    requestAnimationFrame(() => this.codeMirror.refresh());
   }
 }

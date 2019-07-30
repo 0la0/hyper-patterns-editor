@@ -13,7 +13,7 @@ export default class EditorRoot extends BaseComponent {
   }
 
   constructor() {
-    super(style, markup, [ 'midiButton', 'sampleButton', 'settingsButton' ]);
+    super(style, markup, [ 'midiButton', 'sampleButton', 'settingsButton', 'toggleButton' ]);
     this.editorState = new EditorState({
       midiButton: this.dom.midiButton,
       sampleButton: this.dom.sampleButton,
@@ -25,8 +25,12 @@ export default class EditorRoot extends BaseComponent {
     this.shadowRoot.appendChild(this.editorState.settings);
     this.eventBusSubscription = new Subscription('DATA_STORE', this.handleDataStoreUpdate.bind(this));
     this.escapeKeySubscription = new Subscription('KEY_SHORTCUT', (msg) => {
-      if (msg.shortcut !== 'KEY_ESCAPE') { return; }
-      dataStore.setValue({ editorDrawer: 'OFF' });
+      if (msg.shortcut === 'KEY_ESCAPE') {
+        dataStore.setValue({ editorDrawer: 'OFF' });
+      }
+      if (msg.shortcut === 'KEY_SPACE') {
+        this.dom.toggleButton.toggle();
+      }
     });
   }
 
