@@ -1,14 +1,11 @@
-import { eventBus } from './EventBus';
+import { Observable, ObservableObject } from 'sea';
 
-class Store {
+class DataStore {
   constructor() {
-    this.dataStore = {};
-  }
-
-  setValue(obj) {
-    this.dataStore = Object.assign(this.dataStore, obj);
-    eventBus.publish({ address: 'DATA_STORE', dataStore: this.dataStore });
+    this.fontSize = new Observable(24);
+    this.graphics = new ObservableObject({ isOn: false, width: 0, height: 0 });
+    this.setting = new Observable('OFF');
   }
 }
-
-export default new Store();
+const dataStore = new DataStore();
+export default dataStore;

@@ -1,6 +1,6 @@
 import LiveDom from 'live-dom';
-import Subscription from '../EventBus/Subscription';
-import { eventBus, } from '../EventBus';
+import { Observer } from 'sea';
+import dataStore  from '../Store';
 
 // TODO: create <ps-viz-global-scene> that acts as a singleton
 function buildSceneComponent() {
@@ -20,17 +20,9 @@ class GraphicsWindow {
     this.scene = buildSceneComponent();
     this.liveDom = new LiveDom({ domNode: this.scene, evalWrapperFn });
     this.parentElement.appendChild(this.scene);
-    this.eventBusSubscription = new Subscription('DATA_STORE', this.handleDataStoreUpdate.bind(this));
-    eventBus.subscribe(this.eventBusSubscription);
+    this.graphicsObserver = new Observer(this.handleDataStoreUpdate.bind(this));
     this.isConnected = true;
-    // TODO: store isRunning variable, use it to start / stop render loop
-    document.addEventListener('metronometoggle', event => {
-      if (event.detail.isOn && this.isConnected) {
-        this.scene.start();
-      } else {
-        this.scene.stop();
-      }
-    });
+    setTimeout(() => dataStore.graphics.observe(this.graphicsObserver));
   }
 
   setHtml(htmlString) {
@@ -40,18 +32,19 @@ class GraphicsWindow {
 
   destroy() {
     // TODO destroy liveDom
-    this.eventBusSubscription.unsubscribe(this.eventBusSubscription);
+    dataStore.graphics.unobserve(this.graphicsObserver);
   }
 
-  handleDataStoreUpdate({ dataStore }) {
-    if (dataStore.graphicsAreOn) {
+  handleDataStoreUpdate(graphicsState) {
+    console.log(graphicsState, this.isConnected)
+    if (graphicsState.isOn) {
       if (!this.isConnected) {
         // TODO: if resume render loop
         this.parentElement.style.setProperty('display', 'block');
         this.isConnected = true;
       }
-      const w = Math.round(dataStore.graphicsWindowWidth * window.innerWidth);
-      const h = Math.round(dataStore.graphicsWindowHeight * window.innerHeight);
+      const w = Math.round(graphicsState.width * window.innerWidth);
+      const h = Math.round(graphicsState.height * window.innerHeight);
       requestAnimationFrame(() => {
         this.parentElement.style.setProperty('width', `${w}px`);
         this.parentElement.style.setProperty('height', `${h}px`);

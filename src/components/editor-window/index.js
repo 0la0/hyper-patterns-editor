@@ -1,6 +1,6 @@
+import { Subscription } from 'sea';
 import BaseComponent from '../primitives/util/base-component';
 import { eventBus } from '../../services/EventBus';
-import Subscription from '../../services/EventBus/Subscription';
 import TabWindow from './TabWindow';
 import provideGraphicsWindow from '../../services/GraphicsWindow';
 import AudioTab from '../../services/AudioTab';

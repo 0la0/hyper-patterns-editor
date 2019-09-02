@@ -1,6 +1,6 @@
 import BaseComponent from '../primitives/util/base-component';
 import { clamp } from '../../services/Math';
-import dataStore from '../../services/Store';
+import dataStore  from '../../services/Store';
 import style from './graphics-window-editor.css';
 import markup from './graphics-window-editor.html';
 
@@ -31,7 +31,7 @@ export default class GraphicsWindowEditor extends BaseComponent {
         const normalY = (event.clientY - this.boundingRect.top + this.state.bufferY) / this.boundingRect.height;
         const x = clamp(normalX, 0, 1);
         const y = 1 - clamp(normalY, 0, 1);
-        dataStore.setValue({ graphicsWindowWidth: x, graphicsWindowHeight: y });
+        dataStore.graphics.setValue({ width: x, height: y });
         requestAnimationFrame(() => {
           this.dom.resizableRect.style.setProperty('width', `${x * 100}%`);
           this.dom.resizableRect.style.setProperty('height', `${y * 100}%`);

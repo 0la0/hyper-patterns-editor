@@ -1,5 +1,6 @@
-import 'ps-markup';
-import 'ps-viz-markup';
+import 'ps-pattern';
+import 'ps-sound';
+import 'ps-visuals';
 
 import 'codemirror/mode/jsx/jsx';
 import 'codemirror/addon/hint/javascript-hint';

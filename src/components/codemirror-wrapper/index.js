@@ -1,7 +1,7 @@
 import CodeMirror from 'codemirror';
+import { Observer } from 'sea';
+import dataStore  from '../../services/Store';
 import BaseComponent from '../primitives/util/base-component';
-import Subscription from '../../services/EventBus/Subscription';
-import { eventBus } from '../../services/EventBus';
 import markup from './editor-root.html';
 import componentStyles from './editor-root.css';
 import codeMirrorStylesheet from './code-mirror-stylesheet.css';
@@ -31,7 +31,9 @@ export default class CodeMirrorWrapper extends BaseComponent {
   constructor(handleSubmit, textContent = '') {
     super(styles, markup, [ 'editorContainer' ]);
     this.handleSubmit = handleSubmit || (() => console.log('Submit not defined'));
-    this.dataStoreSubscription = new Subscription('DATA_STORE', this.handleDataStoreUpdate.bind(this));
+    this.fontSizeObserver = new Observer(fontSize => {
+      this.dom.cm && this.dom.cm.style.setProperty('font-size', `${fontSize}px`);
+    });
     this.textContent = textContent;
   }
 
@@ -45,17 +47,15 @@ export default class CodeMirrorWrapper extends BaseComponent {
     };
     this.codeMirror = CodeMirror(this.dom.editorContainer, codeMirrorOptions);
     this.codeMirror.setSize('100%', '100%');
-    eventBus.subscribe(this.dataStoreSubscription);
+    dataStore.fontSize.observe(this.fontSizeObserver);
     setTimeout(() => {
       this.codeMirror.refresh();
       this.dom.cm = this.dom.editorContainer.children[0];
     });
   }
 
-  handleDataStoreUpdate(obj) {
-    if (obj.dataStore && obj.dataStore.fontSize && this.dom.cm) {
-      this.dom.cm.style.setProperty('font-size', `${obj.dataStore.fontSize}px`);
-    }
+  disconnectedCallback() {
+    dataStore.fontSize.removeObserver(this.fontSizeObserver);
   }
 
   focus() {

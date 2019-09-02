@@ -1,9 +1,9 @@
+import { Subscription, Observer } from 'sea';
 import BaseComponent from '../primitives/util/base-component';
 import EditorState from './EditorState';
 import { eventBus, } from '../../services/EventBus';
-import Subscription from '../../services/EventBus/Subscription';
 import GlobalListeners from '../../services/GlobalListeners';
-import dataStore from '../../services/Store';
+import dataStore  from '../../services/Store';
 import markup from './editor-root.html';
 import style from './editor-root.css';
 
@@ -18,47 +18,41 @@ export default class EditorRoot extends BaseComponent {
       midiButton: this.dom.midiButton,
       sampleButton: this.dom.sampleButton,
       settingsButton: this.dom.settingsButton,
-      closeCallback: () => dataStore.setValue({ editorDrawer: 'OFF' })
+      closeCallback: () => dataStore.setting.setValue('OFF')
     });
     this.shadowRoot.appendChild(this.editorState.midi);
     this.shadowRoot.appendChild(this.editorState.sample);
     this.shadowRoot.appendChild(this.editorState.settings);
-    this.eventBusSubscription = new Subscription('DATA_STORE', this.handleDataStoreUpdate.bind(this));
+    this.settingStateObserver = new Observer(editorDrawer => this.editorState.render(editorDrawer));
     this.escapeKeySubscription = new Subscription('KEY_SHORTCUT', (msg) => {
-      if (msg.shortcut === 'KEY_ESCAPE') {
-        dataStore.setValue({ editorDrawer: 'OFF' });
+      if (msg.shortcut !== 'KEY_ESCAPE') {
+        return;
       }
-      if (msg.shortcut === 'KEY_SPACE') {
-        this.dom.toggleButton.toggle();
-      }
+      dataStore.setting.setValue('OFF');
     });
   }
 
   connectedCallback() {
     GlobalListeners.init();
-    eventBus.subscribe(this.eventBusSubscription);
+    dataStore.setting.observe(this.settingStateObserver);
     eventBus.subscribe(this.escapeKeySubscription);
   }
 
   disconnectedCallback() {
     GlobalListeners.tearDown();
-    eventBus.unsubscribe(this.eventBusSubscription);
+    dataStore.setting.unobserve(this.settingStateObserver);
     eventBus.unsubscribe(this.escapeKeySubscription);
   }
 
   handleMidiClick(event) {
-    dataStore.setValue({ editorDrawer: event.target.isOn ? 'MIDI' : 'OFF' });
+    dataStore.setting.setValue(event.target.isOn ? 'MIDI' : 'OFF');
   }
 
   handleSampleClick(event) {
-    dataStore.setValue({ editorDrawer: event.target.isOn ? 'SAMPLE' : 'OFF' });
+    dataStore.setting.setValue(event.target.isOn ? 'SAMPLE' : 'OFF');
   }
 
   handleSettingsClick(event) {
-    dataStore.setValue({ editorDrawer: event.target.isOn ? 'SETTINGS' : 'OFF' });
-  }
-
-  handleDataStoreUpdate(obj) {
-    this.editorState.render(obj.dataStore.editorDrawer);
+    dataStore.setting.setValue(event.target.isOn ? 'SETTINGS' : 'OFF');
   }
 }

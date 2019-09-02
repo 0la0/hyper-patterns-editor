@@ -4,6 +4,7 @@ import EditorRoot from '../editor-root';
 import EditorTab from '../editor-window/editor-tab';
 import EditorWindow from '../editor-window';
 import GraphicsWindowEditor from '../graphics-window-editor';
+import MetronomeController from '../metronome-ctrl';
 import MidiEditor from '../midi-editor';
 import MidiDevice from '../midi-editor/midi-device';
 import Primitives from '../primitives';
@@ -26,6 +27,7 @@ const components = [
   EditorTab,
   EditorWindow,
   GraphicsWindowEditor,
+  MetronomeController,
   MidiEditor,
   MidiDevice,
   SampleDisplay,
