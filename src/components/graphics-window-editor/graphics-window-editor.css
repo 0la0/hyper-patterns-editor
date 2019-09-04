@@ -18,6 +18,10 @@
   bottom: 0;
   width: 50%;
   height: 50%;
+  cursor: grab;
+}
+.resizable-rect:active:hover {
+  cursor: grabbing;
 }
 
 .resizable-ctrl {
@@ -31,28 +35,8 @@
   background-color: var(--color-error);
 }
 
-.resizable-ctrl-nw {
-  left: 0;
-  top: 0;
-  /* cursor: nw-resize; */
-  /* background-color: red; */
-}
-
 .resizable-ctrl-ne {
   right: 0;
   top: 0;
-  /* cursor: ne-resize; */
-  /* background-color: pink; */
-}
-
-.resizable-ctrl-se {
-  right: 0;
-  bottom: 0;
-  cursor: se-resize;
-}
-
-.resizable-ctrl-sw {
-  left: 0;
-  bottom: 0;
-  cursor: sw-resize;
+  cursor: ne-resize;
 }

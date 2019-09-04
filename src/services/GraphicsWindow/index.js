@@ -36,7 +36,6 @@ class GraphicsWindow {
   }
 
   handleDataStoreUpdate(graphicsState) {
-    console.log(graphicsState, this.isConnected)
     if (graphicsState.isOn) {
       if (!this.isConnected) {
         // TODO: if resume render loop

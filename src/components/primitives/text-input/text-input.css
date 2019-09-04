@@ -2,12 +2,20 @@
   display: block;
   font-size: 1em;
   width: 100%;
-  background-color: var(--color-black-light);
+  background: unset;
   border: none;
-  border-bottom: 1px solid var(--color-grey-light);
+  border-bottom: 0px solid var(--color-grey-light);
   outline: none;
   color: var(--color-grey-light);
+  text-align: center;
+  transition: 0.15s border-bottom ease;
 }
 .text-input:focus {
   outline: none;
+  border-bottom: 1px solid var(--color-grey-light);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
