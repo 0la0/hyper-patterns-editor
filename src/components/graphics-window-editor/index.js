@@ -51,6 +51,11 @@ export default class GraphicsWindowEditor extends BaseComponent {
           this.state.bottom = this.state.bottom - diffY;
           this.dom.resizableRect.style.setProperty('bottom', `${this.state.bottom}px`);
         }
+        if (!skipX || !skipY) {
+          const left = (targetRect.left - this.boundingRect.left) / this.boundingRect.width;
+          const bottom = (this.boundingRect.bottom - targetRect.bottom) / this.boundingRect.height;
+          dataStore.graphics.setValue({ left, bottom });
+        }
         this.state.lastX = event.screenX;
         this.state.lastY = event.screenY;
       },

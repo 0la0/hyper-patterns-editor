@@ -47,6 +47,8 @@ class GraphicsWindow {
       requestAnimationFrame(() => {
         this.parentElement.style.setProperty('width', `${w}px`);
         this.parentElement.style.setProperty('height', `${h}px`);
+        this.parentElement.style.setProperty('left', `${graphicsState.left * 100}%`);
+        this.parentElement.style.setProperty('bottom', `${graphicsState.bottom * 100}%`);
         this.scene.setSize(w, h);
       });
     } else {

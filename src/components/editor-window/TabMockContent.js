@@ -5,10 +5,12 @@ export const audioMock = `
   </ps-gain>
 </ps-dac>
 <ps-seq>
-  <ps-pat-mod speed="1" degrade="1">
-    <ps-pat-midi pattern="a:52 a:60 a:65 a:72"></ps-pat-midi>
-    <ps-pat-midi pattern="a a a"></ps-pat-midi>
-  </ps-pat-mod>
+  <ps-arp step="1" distance="12" rate="1" repeat="1">
+    <ps-pat-mod speed="1">
+      <ps-pat-midi pattern="a:52 a:60 a:65 a:72"></ps-pat-midi>
+      <ps-pat-midi pattern="a a a"></ps-pat-midi>
+    </ps-pat-mod>
+  </ps-arp>
 </ps-seq>`;
 
 export const graphicsMock = `
