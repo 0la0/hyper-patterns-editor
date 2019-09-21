@@ -1,5 +1,4 @@
 import BaseComponent from '../primitives/util/base-component';
-import dataStore  from '../../services/Store';
 import style from './settings-editor.css';
 import markup from './settings-editor.html';
 
@@ -8,18 +7,21 @@ export default class SettingsEditor extends BaseComponent {
     return 'settings-editor';
   }
 
-  constructor(closeCallback) {
-    super(style, markup, [ 'version', ]);
-    this.handleClose = closeCallback;
+  constructor() {
+    super(style, markup, [ 'appearance', 'graphics', 'version', ]);
     this.dom.version.innerText = VERSION;
+    this.editorContainers = [
+      this.dom.appearance,
+      this.dom.graphics,
+    ];
+    this.openEditor = false;
   }
 
-  handleFontSizeChange(event) {
-    const fontSize = parseInt(event.target.value, 10);
-    dataStore.fontSize.setValue(fontSize);
+  setCloseCallback(closeCallback) {
+    this.closeCallback = closeCallback;
   }
 
-  handleGraphicsToggle(event) {
-    dataStore.graphics.setValue({ isOn: event.target.value });
+  handleClose(event) {
+    this.closeCallback && this.closeCallback(event);
   }
 }

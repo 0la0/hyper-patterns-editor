@@ -1,6 +1,26 @@
-<p>graphics window editor</p>
-<div class="container" id="resizableContainer">
-  <div class="resizable-rect" id="resizableRect">
-    <div class="resizable-ctrl resizable-ctrl-ne" id="resizableCtrlNE"></div>
+<div class="settings-row">
+  <label class="setting-label" for="fontSizeInput">Graphics:</label>
+  <toggle-button
+    id="graphicsToggleButton"
+    class="setting-value"
+    click="handleGraphicsToggle"
+    onlabel="On"
+    offlabel="Off">
+  </toggle-button>
+</div>
+
+<div id="graphicsSettings" class="graphics-settings">
+  <div class="settings-row">
+    <text-button
+      id="graphicsToggleButton"
+      class="setting-value"
+      click="handleFullscreen"
+      label="Fullscreen">
+    </text-button>
+  </div>
+  <div class="container" id="resizableContainer">
+    <div class="resizable-rect" id="resizableRect">
+      <div class="resizable-ctrl resizable-ctrl-ne" id="resizableCtrlNE"></div>
+    </div>
   </div>
 </div>

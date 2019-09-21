@@ -1,4 +1,4 @@
-.top-row {
+/* .top-row {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -15,7 +15,7 @@
 .close-button {
   flex: 0;
   background-color: var(--color-black-light);
-}
+} */
 
 .refresh-button {
   display: inline-block;

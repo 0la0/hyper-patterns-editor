@@ -1,3 +1,4 @@
+import { Observer } from 'sea';
 import BaseComponent from '../primitives/util/base-component';
 import { clamp } from '../../services/Math';
 import dataStore  from '../../services/Store';
@@ -10,7 +11,7 @@ export default class GraphicsWindowEditor extends BaseComponent {
   }
 
   constructor() {
-    super(style, markup, [ 'resizableContainer', 'resizableRect', 'resizableCtrlNE' ]);
+    super(style, markup, [ 'graphicsSettings', 'resizableContainer', 'resizableRect', 'resizableCtrlNE' ]);
     this.state = {
       draggingStrategy: null,
       left: 0,
@@ -60,6 +61,9 @@ export default class GraphicsWindowEditor extends BaseComponent {
         this.state.lastY = event.screenY;
       },
     };
+
+    this.graphicsObserver = new Observer(this.handleDataStoreUpdate.bind(this));
+    dataStore.graphics.observe(this.graphicsObserver);
   }
 
   connectedCallback() {
@@ -92,5 +96,35 @@ export default class GraphicsWindowEditor extends BaseComponent {
 
   disconnectedCallback() {
     // TODO: remove listeners
+    dataStore.graphics.unobserve(this.graphicsObserver);
+  }
+
+  handleGraphicsToggle(event) {
+    dataStore.graphics.setValue({ isOn: event.target.value });
+  }
+
+  handleDataStoreUpdate(graphicsState) {
+    requestAnimationFrame(() => {
+      if (graphicsState.isOn) {
+        this.dom.graphicsSettings.classList.add('graphics-settings-active');
+      } else {
+        this.dom.graphicsSettings.classList.remove('graphics-settings-active');
+      }
+    });
+  }
+
+  handleFullscreen() {
+    dataStore.graphics.setValue({
+      width: 1,
+      height: 1,
+      left: 0,
+      bottom: 0
+    });
+    requestAnimationFrame(() => {
+      this.dom.resizableRect.style.setProperty('width', '100%');
+      this.dom.resizableRect.style.setProperty('height', '100%');
+      this.dom.resizableRect.style.setProperty('left', '0px');
+      this.dom.resizableRect.style.setProperty('bottom', '0px');
+    });
   }
 }

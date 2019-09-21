@@ -1,20 +1,5 @@
 <div class="row top-row">
-  <!-- TODO: create topbar component -->
   <div class="row">
-    <toggle-button
-      id="midiButton"
-      class="ctrl-button"
-      click="handleMidiClick"
-      onlabel="MIDI"
-      offlabel="MIDI">
-    </toggle-button>
-    <toggle-button
-      id="sampleButton"
-      class="ctrl-button"
-      click="handleSampleClick"
-      onlabel="Samples"
-      offlabel="Samples">
-    </toggle-button>
     <toggle-button
       id="settingsButton"
       class="ctrl-button"
@@ -26,3 +11,4 @@
   <metronome-ctrl></metronome-ctrl>
 </div>
 <editor-window class="editor-window"></editor-window>
+<settings-editor class="editor" id="settingsEditor"></settings-editor>

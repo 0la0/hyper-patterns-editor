@@ -3,11 +3,20 @@
   --half-ctrl: 10px;
 }
 
+.graphics-settings {
+  display: none;
+}
+
+.graphics-settings-active {
+  display: block;
+}
+
 .container {
   border: 1px solid var(--color-grey-darker);
-  width: 100%;
+  width: 90%;
   height: 200px;
   position: relative;
+  margin: 0 auto 16px auto;
 }
 
 .resizable-rect {
@@ -39,4 +48,24 @@
   right: 0;
   top: 0;
   cursor: ne-resize;
+}
+
+.settings-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 8px;
+}
+
+/* .settings-divider {
+  border-bottom: 1px solid var(--color-grey-light);
+} */
+
+.setting-label {
+  font-size: 1.1em;
+}
+
+.setting-value {
+  margin: 0 0 0 8px;
 }

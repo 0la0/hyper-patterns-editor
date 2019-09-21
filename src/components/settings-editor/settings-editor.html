@@ -7,32 +7,12 @@
   </text-button>
 </div>
 
-<div class="settings-row">
-  <label class="setting-label" for="fontSizeInput">FontSize:</label>
-  <text-input
-    id="fontSizeInput"
-    type="number"
-    value="24"
-    change="handleFontSizeChange"
-    min="12"
-    max="72"
-    class="setting-value"
-  >
-  </text-input>
-</div>
-
-<div class="settings-row">
-  <label class="setting-label" for="fontSizeInput">Graphics:</label>
-  <toggle-button
-    id="graphicsToggleButton"
-    class="setting-value"
-    click="handleGraphicsToggle"
-    onlabel="Graphics"
-    offlabel="Graphics">
-  </toggle-button>
-</div>
-
+<appearance-editor></appearance-editor>
+<div class="divider"></div>
 <graphics-window-editor></graphics-window-editor>
+<div class="divider"></div>
+<sample-editor></sample-editor>
+<div class="divider"></div>
 
 <p class="version">
   <span>Version</span>

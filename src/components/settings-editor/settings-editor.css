@@ -17,20 +17,8 @@
   background-color: var(--color-black-light);
 }
 
-.settings-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 8px;
-}
-
-.setting-label {
-  font-size: 1.1em;
-}
-
-.setting-value {
-  margin: 0 0 0 8px;
+.divider {
+  border-bottom: 1px solid var(--color-grey-light);
 }
 
 .version {
@@ -38,4 +26,4 @@
   left: 0;
   bottom: 0;
   padding: 8px;
-}
+} 

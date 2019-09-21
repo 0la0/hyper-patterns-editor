@@ -14,7 +14,7 @@ export default class SampleEditor extends BaseComponent {
   constructor(closeCallback) {
     super(style, markup, [ 'sampleList' ]);
     this.handleClose = closeCallback;
-    this._populateSampleKeys();
+    // this._populateSampleKeys();
   }
 
   _populateSampleKeys() {

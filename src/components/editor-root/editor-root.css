@@ -15,12 +15,6 @@
   z-index: 1;
 }
 
-/* .toggle-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-} */
-
 .editor-window {
   flex: 1;
 }
@@ -36,7 +30,9 @@
   left: 0;
   background-color: var(--color-black-light);
   z-index: 5;
-  border: var(--border-default);
+  border-right: var(--border-default);
+  border-top: var(--border-default);
+  border-radius: 4px;
   width: 400px;
   height: calc(100% - var(--topbar-height) - 2px);
   transform: translateX(-100%);
@@ -44,12 +40,4 @@
 }
 .editor-visible {
   transform: translateX(0);
-}
-
-.sound-visualizer {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  /* padding: 8px; */
-  background-color: var(--color-black-light);
 }

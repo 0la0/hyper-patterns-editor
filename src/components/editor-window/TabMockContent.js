@@ -19,7 +19,4 @@ export const graphicsMock = `
   rotation="0 0 0"
   scale="1 1 1"
   color="0.5 0 0.8"
-  pos-vel="0 0 0"
-  rot-vel="1 0 0"
-  scale-vel="0 0 0"
 />`;
