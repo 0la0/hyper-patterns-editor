@@ -21,7 +21,7 @@ export default class SampleEditor extends BaseComponent {
       const sampleKeys = PsSound.getSampleNames();
       [ ...this.dom.sampleList.children ].forEach(ele => this.dom.sampleList.removeChild(ele));
       sampleKeys.forEach(sampleName =>
-        this.dom.sampleList.appendChild(new SampleDisplay(sampleName)));
+        this.dom.sampleList.appendChild(new SampleDisplay(sampleName, this._populateSampleKeys.bind(this))));
     });
   }
 

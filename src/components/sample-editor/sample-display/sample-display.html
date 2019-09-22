@@ -1,11 +1,16 @@
-<div class="top-row">
-  <p id="label"></p>
-  <text-button
-    class="sample-button"
-    click="playSample"
-    label=">">
-  </text-button>
-  <span class="dots"></span>
-</div>
-<div id="editor" class="editor">
-</div>
+<text-button
+  click="playSample"
+  label="preview">
+</text-button>
+<text-input
+  id="sampleName"
+  change="handleNameChange"
+  class="sample-name"
+  textAlign="left">
+</text-input>
+<span class="dots"></span>
+<text-button
+  click="deleteSample"
+  label="delete"
+  class="delete-button">
+</text-button>

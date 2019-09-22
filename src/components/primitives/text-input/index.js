@@ -24,5 +24,8 @@ export default class TextInput extends BaseComponent {
     attributeReflectionList.forEach(attributeName =>
       reflectAttribute(this, attributeName, this.dom.textInput));
     reflectCallback(this, 'change', this.dom.textInput);
+    if (this.getAttribute('textAlign') === 'left') {
+      this.dom.textInput.classList.add('align-left');
+    }
   }
 }

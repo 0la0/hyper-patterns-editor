@@ -8,14 +8,25 @@ export default class SampleDisplay extends BaseComponent {
     return 'sample-display';
   }
 
-  constructor(sampleName) {
-    super(style, markup, [ 'label', 'editor' ]);
+  constructor(sampleName, onDeleteCallback) {
+    super(style, markup, [ 'sampleName' ]);
     this.sampleName = sampleName;
-    this.editorIsActive = false;
-    this.dom.label.textContent = sampleName;
+    this.onDeleteCallback = onDeleteCallback;
+    this.dom.sampleName.setAttribute('value', sampleName);
   }
 
   playSample() {
     PsSound.previewSample(this.sampleName);
+  }
+
+  handleNameChange(event) {
+    const newSampleName = event.target.value;
+    PsSound.renameSample(this.sampleName, newSampleName);
+    this.sampleName = newSampleName;
+  }
+
+  deleteSample() {
+    PsSound.removeSample(this.sampleName);
+    this.onDeleteCallback();
   }
 }
