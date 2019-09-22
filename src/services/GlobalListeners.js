@@ -1,3 +1,4 @@
+import { eventBus } from './EventBus';
 import keyShortcutManager from './keyShortcut';
 
 class Listener {
@@ -9,8 +10,7 @@ class Listener {
 
 const listeners = [
   new Listener('keydown', event => keyShortcutManager.offerKeyShortcutEvent(event)),
-  // new Listener('mousemove', event => eventBus.publish({ address: 'MOUSE_MOVE', event })),
-  // new Listener('mouseup', event => eventBus.publish({ address: 'MOUSE_UP', event })),
+  new Listener('resize', event => eventBus.publish({ address: 'RESIZE', event }))
 ];
 
 export default class GlobalListeners {

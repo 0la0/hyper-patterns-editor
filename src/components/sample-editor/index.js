@@ -1,10 +1,9 @@
+import PsSound from 'ps-sound';
 import BaseComponent from '../primitives/util/base-component';
 import SampleDisplay from './sample-display';
-// import sampleBank from 'services/audio/sampleBank';
+import { loadAudioFilesAsArrayBuffers } from '../../services/FileLoader';
 import style from './sample-editor.css';
 import markup from './sample-editor.html';
-
-const sampleBank = { getSampleKeys: () => [], };
 
 export default class SampleEditor extends BaseComponent {
   static get tag() {
@@ -14,13 +13,24 @@ export default class SampleEditor extends BaseComponent {
   constructor(closeCallback) {
     super(style, markup, [ 'sampleList' ]);
     this.handleClose = closeCallback;
-    // this._populateSampleKeys();
+    this._populateSampleKeys();
   }
 
   _populateSampleKeys() {
-    const sampleKeys = sampleBank.getSampleKeys();
-    [ ...this.dom.sampleList.children ].forEach(ele => this.dom.sampleList.removeChild(ele));
-    sampleKeys.forEach(sampleName =>
-      this.dom.sampleList.appendChild(new SampleDisplay(sampleName)));
+    requestAnimationFrame(() => {
+      const sampleKeys = PsSound.getSampleNames();
+      [ ...this.dom.sampleList.children ].forEach(ele => this.dom.sampleList.removeChild(ele));
+      sampleKeys.forEach(sampleName =>
+        this.dom.sampleList.appendChild(new SampleDisplay(sampleName)));
+    });
+  }
+
+  loadSample() {
+    loadAudioFilesAsArrayBuffers()
+      .then((nameArrayBufferPairs) => Promise.all(
+        nameArrayBufferPairs.map(({ name, arrayBuffer }) => PsSound.addSample(name, arrayBuffer))
+      ))
+      .then(() => this._populateSampleKeys())
+      .catch(error => console.log('loadSample error', error));
   }
 }

@@ -11,7 +11,6 @@ import MidiDevice from '../midi-editor/midi-device';
 import Primitives from '../primitives';
 import SampleDisplay from '../sample-editor/sample-display';
 import SampleEditor from '../sample-editor';
-import SampleLoader from '../sample-editor/sample-loader';
 import SampleVisualizer from '../sample-editor/sample-visualizer';
 import SettingsEditor from '../settings-editor';
 
@@ -34,7 +33,6 @@ const components = [
   MidiDevice,
   SampleDisplay,
   SampleEditor,
-  SampleLoader,
   SampleVisualizer,
   SettingsEditor,
 ];

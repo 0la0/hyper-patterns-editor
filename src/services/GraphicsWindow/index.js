@@ -1,6 +1,7 @@
 import LiveDom from 'live-dom';
-import { Observer } from 'sea';
+import { Observer, Subscription } from 'sea';
 import dataStore  from '../Store';
+import { eventBus } from '../EventBus';
 
 // TODO: create <ps-viz-global-scene> that acts as a singleton
 function buildSceneComponent() {
@@ -22,6 +23,21 @@ class GraphicsWindow {
     this.parentElement.appendChild(this.scene);
     this.graphicsObserver = new Observer(this.handleDataStoreUpdate.bind(this));
     this.isConnected = true;
+    this.clockIsRunning = false;
+    this._start = () => {
+      this.clockIsRunning = true;
+      if (this.isConnected) {
+        this.scene.start();
+      }
+    };
+    this._stop = () => {
+      this.clockIsRunning = false;
+      this.scene.stop();
+    };
+    this.resizeSubscription = new Subscription('RESIZE', () => this.handleDataStoreUpdate(dataStore.graphics.value));
+    document.addEventListener('CLOCK_START', this._start);
+    document.addEventListener('CLOCK_STOP', this._stop);
+    eventBus.subscribe(this.resizeSubscription);
     setTimeout(() => dataStore.graphics.observe(this.graphicsObserver));
   }
 
@@ -33,6 +49,9 @@ class GraphicsWindow {
   destroy() {
     // TODO destroy liveDom
     dataStore.graphics.unobserve(this.graphicsObserver);
+    document.removeEventListener('CLOCK_START', this._start);
+    document.removeEventListener('CLOCK_STOP', this._stop);
+    eventBus.unSubscribe(this.resizeSubscription);
   }
 
   handleDataStoreUpdate(graphicsState) {
@@ -50,6 +69,9 @@ class GraphicsWindow {
         this.parentElement.style.setProperty('left', `${graphicsState.left * 100}%`);
         this.parentElement.style.setProperty('bottom', `${graphicsState.bottom * 100}%`);
         this.scene.setSize(w, h);
+        if (this.clockIsRunning) {
+          this.scene.start();
+        }
       });
     } else {
       if (this.isConnected) {
