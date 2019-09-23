@@ -1,3 +1,4 @@
+import { Observer } from 'sea';
 import BaseComponent from '../primitives/util/base-component';
 import dataStore  from '../../services/Store';
 import style from './appearance-editor.css';
@@ -9,7 +10,17 @@ export default class AppearanceEditor extends BaseComponent {
   }
 
   constructor() {
-    super(style, markup, []);
+    super(style, markup, [ 'fontSizeInput' ]);
+    this.fontSizeObserver = new Observer(fontSize =>
+      this.dom.fontSizeInput.setAttribute('value', fontSize));
+  }
+
+  connectedCallback() {
+    dataStore.fontSize.observe(this.fontSizeObserver);
+  }
+
+  disconnectedCallback() {
+    dataStore.fontSize.removeObserver(this.fontSizeObserver);
   }
 
   handleFontSizeChange(event) {

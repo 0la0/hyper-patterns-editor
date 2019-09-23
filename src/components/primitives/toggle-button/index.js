@@ -39,6 +39,11 @@ export default class ToggleButton extends BaseComponent {
     this.render();
   }
 
+  setValue(value) {
+    this.isOn = !!value;
+    this.render();
+  }
+
   turnOff() {
     this.isOn = false;
     this.render();
