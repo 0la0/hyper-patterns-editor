@@ -26,10 +26,6 @@ export default class GraphicsWindowEditor extends BaseComponent {
         const x = clamp(normalX, 0, 1);
         const y = 1 - clamp(normalY, 0, 1);
         dataStore.graphics.setValue({ width: x, height: y });
-        // requestAnimationFrame(() => {
-        //   this.dom.resizableRect.style.setProperty('width', `${x * 100}%`);
-        //   this.dom.resizableRect.style.setProperty('height', `${y * 100}%`);
-        // });
       },
       resizableRect: (event) => {
         const targetRect = this.dom.resizableRect.getBoundingClientRect();
@@ -90,7 +86,7 @@ export default class GraphicsWindowEditor extends BaseComponent {
       this.state.lastX = event.screenX;
       this.state.lastY = event.screenY;
     });
-    document.addEventListener('mouseup', () => this.state.draggingStrategy = null);
+    document.addEventListener('mouseup', () => setTimeout(() => this.state.draggingStrategy = null));
     document.addEventListener('mousemove', this.mouseMoveListener);
   }
 
@@ -104,29 +100,22 @@ export default class GraphicsWindowEditor extends BaseComponent {
   }
 
   handleDataStoreUpdate(graphicsState) {
-    console.log('handleGraphicsStateUpdate', graphicsState);
-    // requestAnimationFrame(() => {
-      this.dom.graphicsToggleButton.setValue(graphicsState.isOn);
-      if (graphicsState.isOn) {
-        this.dom.graphicsSettings.classList.add('graphics-settings-active');
-        
-        requestAnimationFrame(() => {
-          const parentRect = this.dom.resizableContainer.getBoundingClientRect();
-          
-          // if (!this.draggingStrategy) {
-          //   const left = graphicsState.left * parentRect.width + parentRect.left;
-          //   const bottom = graphicsState.bottom * parentRect.height + parentRect.bottom;
-            
-          //   this.dom.resizableRect.style.setProperty('left', `${left}px`);
-          //   // this.dom.resizableRect.style.setProperty('bottom', `${bottom}px`);
-          // }
-          this.dom.resizableRect.style.setProperty('width', `${graphicsState.width * 100}%`);
-          this.dom.resizableRect.style.setProperty('height', `${graphicsState.height * 100}%`);
-        });
-      } else {
-        this.dom.graphicsSettings.classList.remove('graphics-settings-active');
+    console.log('isOn', graphicsState)
+    this.dom.graphicsToggleButton.setValue(graphicsState.isOn);
+    if (graphicsState.isOn) {
+      this.dom.graphicsSettings.classList.add('graphics-settings-active');
+      const parentRect = this.dom.resizableContainer.getBoundingClientRect();
+      this.dom.resizableRect.style.setProperty('width', `${graphicsState.width * 100}%`);
+      this.dom.resizableRect.style.setProperty('height', `${graphicsState.height * 100}%`);
+      if (!this.state.draggingStrategy) {
+        const left = graphicsState.left * parentRect.width;
+        const bottom = graphicsState.bottom * parentRect.height 
+        this.dom.resizableRect.style.setProperty('left', `${left}px`);
+        this.dom.resizableRect.style.setProperty('bottom', `${bottom}px`);
       }
-    // });
+    } else {
+      this.dom.graphicsSettings.classList.remove('graphics-settings-active');
+    }
   }
 
   handleFullscreen() {
@@ -136,11 +125,5 @@ export default class GraphicsWindowEditor extends BaseComponent {
       left: 0,
       bottom: 0
     });
-    // requestAnimationFrame(() => {
-    //   this.dom.resizableRect.style.setProperty('width', '100%');
-    //   this.dom.resizableRect.style.setProperty('height', '100%');
-    //   this.dom.resizableRect.style.setProperty('left', '0px');
-    //   this.dom.resizableRect.style.setProperty('bottom', '0px');
-    // });
   }
 }
