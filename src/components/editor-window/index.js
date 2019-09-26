@@ -13,7 +13,7 @@ export default class EditorWindow extends BaseComponent {
   }
 
   constructor() {
-    super(style, markup, [ 'addTab', 'tabContainer', 'contentContainer' ]);
+    super(style, markup, [ 'addAudioTab', 'addGraphicsTab', 'tabContainer', 'contentContainer' ]);
     this.keyShortcutSubscription = new Subscription('KEY_SHORTCUT', (msg) => {
       if (msg.shortcut === 'TAB_NAV_LEFT') {
         this.tabShift(-1);
@@ -28,29 +28,34 @@ export default class EditorWindow extends BaseComponent {
       }
     });
     this.activeTab;
-    this.dom.addTab.addEventListener('click', this.addTab.bind(this));
+    this.dom.addAudioTab.addEventListener('click', this.addAudioTab.bind(this));
+    this.dom.addGraphicsTab.addEventListener('click', this.addGraphicsTab.bind(this));
     this.tabs = [];
   }
 
   connectedCallback() {
     eventBus.subscribe(this.keyShortcutSubscription);
-    this.buildDefaultTabs();
+    
+    // TODO: hydrate tabs from data store
+    this.addTab(new AudioTab());
+    this.addTab(provideGraphicsWindow());
   }
 
   disconnectedCallback() {
     eventBus.unsubscribe(this.keyShortcutSubscription);
   }
 
-  buildDefaultTabs() {
-    this.addTab();
-    this.addTab(true);
+  addAudioTab() {
+    this.addTab(new AudioTab());
   }
 
-  addTab(isGraphicsTab = false) {
+  addGraphicsTab() {
+    this.addTab(provideGraphicsWindow());
+  }
+
+  addTab(contentManager) {
     const index = this.dom.tabContainer.children.length;
     const label = `tab${index + 1}`;
-    console.log('addTab', isGraphicsTab);
-    const contentManager = isGraphicsTab ? provideGraphicsWindow() : new AudioTab();
     const tabWindow = new TabWindow(label, this.dom.tabContainer, this.dom.contentContainer, contentManager)
       .setHandleClick(this.handleTabClick.bind(this))
       .setHandleRemove(this.handleTabRemove.bind(this));

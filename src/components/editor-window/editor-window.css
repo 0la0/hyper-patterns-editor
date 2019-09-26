@@ -34,7 +34,7 @@
   cursor: pointer;
   position: relative;
   display: block;
-  margin: 0 8px 0 32px;
+  margin: 0 4px;
   padding: 0;
   width: 28px;
   height: 28px;
@@ -82,4 +82,12 @@
   bottom: 0;
   right: 0;
   border: 1px solid white;
+}
+
+.button-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: 24px;
 }

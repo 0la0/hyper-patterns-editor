@@ -100,7 +100,6 @@ export default class GraphicsWindowEditor extends BaseComponent {
   }
 
   handleDataStoreUpdate(graphicsState) {
-    console.log('isOn', graphicsState)
     this.dom.graphicsToggleButton.setValue(graphicsState.isOn);
     if (graphicsState.isOn) {
       this.dom.graphicsSettings.classList.add('graphics-settings-active');
