@@ -22,6 +22,6 @@ export default class AudioTab {
   }
 
   destroy() {
-    // TODO
+    this.liveDom.dispose();
   }
 }

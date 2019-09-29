@@ -26,12 +26,12 @@ export default class EditorWindow extends BaseComponent {
         return;
       }
       if (msg.shortcut === 'NEW_EDITOR_WINDOW') {
-        this.addTab();
+        this.addAudioTab();
       }
     });
     this.activeTab;
-    this.dom.addAudioTab.addEventListener('click', this.addAudioTab.bind(this));
-    this.dom.addGraphicsTab.addEventListener('click', this.addGraphicsTab.bind(this));
+    this.dom.addAudioTab.addEventListener('click', () => this.addAudioTab());
+    this.dom.addGraphicsTab.addEventListener('click', () => this.addGraphicsTab());
     this.tabs = [];
     this.onSessionOpen = this.buildFromSavedData.bind(this);
   }
@@ -50,13 +50,15 @@ export default class EditorWindow extends BaseComponent {
     this.addTab(new AudioTab(tabId, defaultValue));
   }
 
-  addGraphicsTab(tabId = uuid(), defaultValue = '') {
+  addGraphicsTab(event, tabId = uuid(), defaultValue = '') {
     this.addTab(new GraphicsTab(tabId, defaultValue));
   }
 
   addTab(contentManager, defaultValue = '') {
+    const labelType = contentManager instanceof AudioTab ? 'Audio' : 'Graphics';
+    const labelCount = this.dom.tabContainer.children.length + 1;
     const tabWindow = new TabWindow({
-      label: `tab${this.dom.tabContainer.children.length + 1}`,
+      label: `${labelType} tab ${labelCount}`,
       tabContainer: this.dom.tabContainer,
       windowContainer: this.dom.contentContainer,
       contentManager,
@@ -113,10 +115,9 @@ export default class EditorWindow extends BaseComponent {
   }
 
   buildFromSavedData() {
-    const storedTabs = store.tabs.value;
-    // TODO: destroy all tabs 
+    const storedTabs = store.tabs.value; 
+    this.tabs.forEach(tab => tab.handleTabRemove());
     Object.keys(storedTabs).forEach(tabId => {
-      console.log('storedTabId:', tabId);
       const tab = storedTabs[tabId];
       const { encodedValue } = tab;
       if (!encodedValue) { return; }

@@ -18,6 +18,6 @@ export default class GraphicsTab {
   }
 
   destroy() {
-    // TODO
+    console.log('TODO: graphicsTab.destroy');
   }
 }
