@@ -28,24 +28,26 @@ export default class CodeMirrorWrapper extends BaseComponent {
     return 'codemirror-wrapper';
   }
 
-  constructor(handleSubmit, textContent = '') {
+  constructor(contentManager) {
     super(styles, markup, [ 'editorContainer' ]);
-    this.handleSubmit = handleSubmit || (() => console.log('Submit not defined'));
+    if (!contentManager) {
+      throw new Error('CodeMirrorWrapper requires a content manager');
+    }
+    this.contentManager = contentManager;
     this.fontSizeObserver = new Observer(fontSize => {
       this.dom.cm && this.dom.cm.style.setProperty('font-size', `${fontSize}px`);
     });
-    this.textContent = textContent;
   }
 
   connectedCallback() {
     const codeMirrorOptions = {
       ...defaultEditorOptions,
       extraKeys: {
-        'Ctrl-Enter': cm => this.handleSubmit(cm.getValue())
+        'Ctrl-Enter': cm => this.contentManager.setHtml(cm.getValue())
       },
-      value: this.textContent,
+      value: this.contentManager.getValue(),
     };
-    this.codeMirror = CodeMirror(this.dom.editorContainer, codeMirrorOptions);
+    this.codeMirror = new CodeMirror(this.dom.editorContainer, codeMirrorOptions);
     this.codeMirror.setSize('100%', '100%');
     dataStore.fontSize.observe(this.fontSizeObserver);
     setTimeout(() => {

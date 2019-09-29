@@ -23,5 +23,6 @@ export default class SceneEditor extends BaseComponent {
 
   openFromLocalStorage() {
     store.openFromLocalStorage();
+    document.dispatchEvent(new CustomEvent('SESSION_OPEN'));
   }
 }

@@ -1,15 +1,15 @@
 import EditorTab from './editor-tab';
 import CodeMirrorWrapper from '../codemirror-wrapper';
-import { audioMock, graphicsMock } from './TabMockContent';
 
 export default class TabWindow {
-  constructor(label, tabContainer, windowContainer, contentManager) {
+  constructor({ label, tabContainer, windowContainer, contentManager, onClick, onRemove }) {
     this.tabContainer = tabContainer;
     this.windowContainer = windowContainer;
     this.contentManager = contentManager;
+    this.onClick = onClick;
+    this.onRemove = onRemove;
     this.tab = new EditorTab(label, this.handleTabClick.bind(this), this.handleTabRemove.bind(this));
-    const mockContent = contentManager.constructor.name === 'AudioTab' ? audioMock : graphicsMock;
-    this.codemirrorWrapper = new CodeMirrorWrapper(this.contentManager.setHtml.bind(this.contentManager), mockContent);
+    this.codemirrorWrapper = new CodeMirrorWrapper(this.contentManager);
     this.tab.classList.add('tab');
     this.codemirrorWrapper.classList.add('editor');
     this.tabContainer.appendChild(this.tab);
@@ -26,18 +26,8 @@ export default class TabWindow {
     }
   }
 
-  setHandleClick(onClick) {
-    this.onClick = onClick;
-    return this;
-  }
-
   handleTabClick() {
     this.onClick(this);
-  }
-
-  setHandleRemove(onRemove) {
-    this.onRemove = onRemove;
-    return this;
   }
 
   handleTabRemove() {
