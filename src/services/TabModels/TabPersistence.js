@@ -23,3 +23,7 @@ export function getPersistedValue(id) {
       return '';
     }
 }
+
+export function deleteById(id) {
+  delete store.tabs.value[id];
+}

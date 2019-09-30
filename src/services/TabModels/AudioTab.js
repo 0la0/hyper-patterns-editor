@@ -1,5 +1,5 @@
 import LiveDom from 'live-dom';
-import { persistTab, getPersistedValue } from './TabPersistence';
+import { persistTab, getPersistedValue, deleteById } from './TabPersistence';
 
 export default class AudioTab {
   constructor(id, defaultValue = '') {
@@ -23,5 +23,6 @@ export default class AudioTab {
 
   destroy() {
     this.liveDom.dispose();
+    deleteById(this.id);
   }
 }

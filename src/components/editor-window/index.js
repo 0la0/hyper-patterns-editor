@@ -16,18 +16,16 @@ export default class EditorWindow extends BaseComponent {
 
   constructor() {
     super(style, markup, [ 'addAudioTab', 'addGraphicsTab', 'tabContainer', 'contentContainer' ]);
+    const eventMap = {
+      TAB_NAV_LEFT: () => this.tabShift(-1),
+      TAB_NAV_RIGHT: () => this.tabShift(1),
+      NEW_AUDIO_TAB: () => this.addAudioTab(),
+      NEW_GRAPHICS_TAB: () => this.addGraphicsTab(),
+    };
     this.keyShortcutSubscription = new Subscription('KEY_SHORTCUT', (msg) => {
-      if (msg.shortcut === 'TAB_NAV_LEFT') {
-        this.tabShift(-1);
-        return;
-      }
-      if (msg.shortcut === 'TAB_NAV_RIGHT') {
-        this.tabShift(1);
-        return;
-      }
-      if (msg.shortcut === 'NEW_EDITOR_WINDOW') {
-        this.addAudioTab();
-      }
+      const action = eventMap[msg.shortcut];
+      if (!action) { return; }
+      action();
     });
     this.activeTab;
     this.dom.addAudioTab.addEventListener('click', () => this.addAudioTab());
@@ -46,7 +44,7 @@ export default class EditorWindow extends BaseComponent {
     document.removeEventListener('SESSION_OPEN', this.onSessionOpen);
   }
 
-  addAudioTab(tabId = uuid(), defaultValue = '') {
+  addAudioTab(event, tabId = uuid(), defaultValue = '') {
     this.addTab(new AudioTab(tabId, defaultValue));
   }
 
@@ -115,8 +113,8 @@ export default class EditorWindow extends BaseComponent {
   }
 
   buildFromSavedData() {
-    const storedTabs = store.tabs.value; 
     this.tabs.forEach(tab => tab.handleTabRemove());
+    const storedTabs = store.tabs.value; 
     Object.keys(storedTabs).forEach(tabId => {
       const tab = storedTabs[tabId];
       const { encodedValue } = tab;
@@ -129,9 +127,9 @@ export default class EditorWindow extends BaseComponent {
         return;
       }
       if (tab.type === 'AUDIO') {
-        this.addAudioTab(tabId, decodedValue);
+        this.addAudioTab(null, tabId, decodedValue);
       } else if (tab.type === 'GRAPHICS') {
-        this.addGraphicsTab(tabId, decodedValue);
+        this.addGraphicsTab(null, tabId, decodedValue);
       } else {
         console.error(`Unrecognized tab type: ${tab.type}`);
       }
