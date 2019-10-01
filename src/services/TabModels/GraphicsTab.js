@@ -20,4 +20,9 @@ export default class GraphicsTab {
   destroy() {
     console.log('TODO: graphicsTab.destroy');
   }
+
+  destroy() {
+    this.liveDom.dispose();
+    deleteById(this.id);
+  }
 }

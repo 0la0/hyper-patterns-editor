@@ -35,8 +35,10 @@ class GraphicsWindow {
       this.scene.stop();
     };
     this.resizeSubscription = new Subscription('RESIZE', () => this.handleDataStoreUpdate(dataStore.graphics.value));
+    this.onSessionOpen = () => console.log('GraphicsWindow.onSessionOpen');
     document.addEventListener('CLOCK_START', this._start);
     document.addEventListener('CLOCK_STOP', this._stop);
+    document.addEventListener('SESSION_OPEN', this.onSessionOpen);
     eventBus.subscribe(this.resizeSubscription);
     setTimeout(() => dataStore.graphics.observe(this.graphicsObserver));
   }
@@ -51,6 +53,7 @@ class GraphicsWindow {
     dataStore.graphics.unobserve(this.graphicsObserver);
     document.removeEventListener('CLOCK_START', this._start);
     document.removeEventListener('CLOCK_STOP', this._stop);
+    document.removeEventListener('SESSION_OPEN', this.onSessionOpen);
     eventBus.unSubscribe(this.resizeSubscription);
   }
 
@@ -84,6 +87,11 @@ class GraphicsWindow {
 }
 
 let instance;
+
+export function initGraphicsWindow() {
+  instance = new GraphicsWindow();
+}
+
 export default function provideGraphicsWindow() {
   if (!instance) {
     instance = new GraphicsWindow();

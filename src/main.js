@@ -9,8 +9,10 @@ import 'codemirror/addon/hint/show-hint';
 
 import init from './components/app/componentManager';
 import App from './components/app';
+import { initGraphicsWindow } from './services/TabModels/GraphicsWindow';
 
 document.addEventListener('DOMContentLoaded', () => {
   init();
   document.body.appendChild(new App());
+  initGraphicsWindow();
 });
