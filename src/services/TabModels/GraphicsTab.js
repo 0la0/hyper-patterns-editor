@@ -5,11 +5,12 @@ export default class GraphicsTab {
   constructor(id) {
     this.id = id;
     this.graphicsWindow = provideGraphicsWindow();
+    this.graphicsWindow.addTab(this.id);
   }
 
   setHtml(htmlString) {
-    console.log('htmlString:', htmlString);
-    this.graphicsWindow.setHtml(htmlString);
+    const subSceneString = `<ps-viz-sub-scene>${htmlString}</ps-viz-sub-scene>`;
+    this.graphicsWindow.setTabHtml(this.id, subSceneString);
     persistTab(this.id, 'GRAPHICS', htmlString);
   }
 
@@ -18,11 +19,6 @@ export default class GraphicsTab {
   }
 
   destroy() {
-    console.log('TODO: graphicsTab.destroy');
-  }
-
-  destroy() {
-    this.liveDom.dispose();
-    deleteById(this.id);
+    this.graphicsWindow.removeTab(this.id);
   }
 }

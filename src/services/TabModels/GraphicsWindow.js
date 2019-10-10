@@ -40,12 +40,27 @@ class GraphicsWindow {
     document.addEventListener('CLOCK_STOP', this._stop);
     document.addEventListener('SESSION_OPEN', this.onSessionOpen);
     eventBus.subscribe(this.resizeSubscription);
+    this.tabs = {};
     setTimeout(() => dataStore.graphics.observe(this.graphicsObserver));
   }
 
-  setHtml(htmlString) {
-    console.log('graphics window htmlString:', htmlString);
+  _updateDom() {
+    const htmlString = Object.values(this.tabs).join('');
     this.liveDom.setHtml(htmlString);
+  }
+
+  addTab(tabId) {
+    this.tabs[tabId] = '';
+  }
+
+  removeTab(tabId) {
+    delete this.tabs[tabId];
+    this._updateDom();
+  }
+
+  setTabHtml(tabId, htmlString) {
+    this.tabs[tabId] = htmlString;
+    this._updateDom();
   }
 
   destroy() {
