@@ -1,11 +1,14 @@
 import provideGraphicsWindow from './GraphicsWindow';
-import { persistTab, getPersistedValue } from './TabPersistence';
+import { persistTab, getPersistedValue, deleteById } from './TabPersistence';
 
 export default class GraphicsTab {
-  constructor(id) {
+  constructor(id, defaultValue = '') {
     this.id = id;
     this.graphicsWindow = provideGraphicsWindow();
     this.graphicsWindow.addTab(this.id);
+    if (defaultValue) {
+      this.setHtml(defaultValue);
+    }
   }
 
   setHtml(htmlString) {
@@ -20,5 +23,6 @@ export default class GraphicsTab {
 
   destroy() {
     this.graphicsWindow.removeTab(this.id);
+    deleteById(this.id);
   }
 }

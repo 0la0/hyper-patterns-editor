@@ -22,7 +22,7 @@ export const audioMock = `
 
 export const graphicsMock = `
 <ps-viz-cone
-  position="-10 -10 0"
+  position="fn(10*sin(time)) -10 0"
   rotation="0 0 0"
   scale="1 1 1"
   color="0.5 0 0.8"
