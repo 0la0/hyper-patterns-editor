@@ -1,5 +1,5 @@
 import 'hyper-patterns';
-import 'ps-sound';
+import 'hyper-sound';
 import 'ps-visuals';
 
 import 'codemirror/mode/jsx/jsx';

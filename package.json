@@ -22,8 +22,8 @@
     "codemirror": "^5.48.0",
     "live-dom": "../live-vdom",
     "hyper-patterns": "../hyper-patterns",
-    "ps-sound": "../ps-sound",
+    "hyper-sound": "../hyper-sound",
     "ps-visuals": "../ps-visuals",
-    "sea": "../event-bus"
+    "sea": "github:0la0/sea#1.0.0"
   }
 }

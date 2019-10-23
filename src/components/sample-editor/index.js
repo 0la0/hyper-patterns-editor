@@ -1,4 +1,4 @@
-import PsSound from 'ps-sound';
+import HyperSound from 'hyper-sound';
 import BaseComponent from '../primitives/util/base-component';
 import SampleDisplay from './sample-display';
 import { loadAudioFilesAsArrayBuffers } from '../../services/FileLoader';
@@ -18,7 +18,7 @@ export default class SampleEditor extends BaseComponent {
 
   _populateSampleKeys() {
     requestAnimationFrame(() => {
-      const sampleKeys = PsSound.getSampleNames();
+      const sampleKeys = HyperSound.getSampleNames();
       [ ...this.dom.sampleList.children ].forEach(ele => this.dom.sampleList.removeChild(ele));
       sampleKeys.forEach(sampleName =>
         this.dom.sampleList.appendChild(new SampleDisplay(sampleName, this._populateSampleKeys.bind(this))));
@@ -28,7 +28,7 @@ export default class SampleEditor extends BaseComponent {
   loadSample() {
     loadAudioFilesAsArrayBuffers()
       .then((nameArrayBufferPairs) => Promise.all(
-        nameArrayBufferPairs.map(({ name, arrayBuffer }) => PsSound.addSample(name, arrayBuffer))
+        nameArrayBufferPairs.map(({ name, arrayBuffer }) => HyperSound.addSample(name, arrayBuffer))
       ))
       .then(() => this._populateSampleKeys())
       .catch(error => console.log('loadSample error', error));
