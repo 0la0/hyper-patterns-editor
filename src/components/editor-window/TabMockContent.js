@@ -9,16 +9,16 @@ export const audioMock = `
     </ps-sampler>
   </ps-gain>
 </ps-dac>
-<ps-seq>
-  <ps-arp step="1" distance="12" rate="1" repeat="1">
-    <ps-pat-mod speed="1">
-      <ps-pat-midi pattern="a:52 a:60 a:65 a:72">
-      </ps-pat-midi>
-      <ps-pat-midi pattern="a a a">
-      </ps-pat-midi>
-    </ps-pat-mod>
-  </ps-arp>
-</ps-seq>`;
+<h-seq>
+  <h-arp step="1" distance="12" rate="1" repeat="1">
+    <h-pat-mod speed="1">
+      <h-pat-midi pattern="a:52 a:60 a:65 a:72">
+      </h-pat-midi>
+      <h-pat-midi pattern="a a a">
+      </h-pat-midi>
+    </h-pat-mod>
+  </h-arp>
+</h-seq>`;
 
 export const graphicsMock = `
 <ps-viz-cone

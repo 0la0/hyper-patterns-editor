@@ -1,4 +1,4 @@
-import 'ps-pattern';
+import 'hyper-patterns';
 import 'ps-sound';
 import 'ps-visuals';
 

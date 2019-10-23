@@ -21,7 +21,7 @@
   "dependencies": {
     "codemirror": "^5.48.0",
     "live-dom": "../live-vdom",
-    "ps-pattern": "../ps-pattern",
+    "hyper-patterns": "../hyper-patterns",
     "ps-sound": "../ps-sound",
     "ps-visuals": "../ps-visuals",
     "sea": "../event-bus"
