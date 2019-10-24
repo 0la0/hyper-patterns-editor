@@ -21,7 +21,7 @@ export const audioMock = `
 </h-seq>`;
 
 export const graphicsMock = `
-<ps-viz-cone
+<h-viz-cone
   position="fn(10*sin(time)) -10 0"
   rotation="0 0 0"
   scale="1 1 1"

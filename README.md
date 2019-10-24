@@ -1,4 +1,4 @@
-# PS-Markup-Editor
+# Hyper Patterns Editor
 A live-coding editor for audio & graphics with HTML
 
 Development ongoing, documentation to follow.

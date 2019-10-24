@@ -3,9 +3,9 @@ import { Observer, Subscription } from 'sea';
 import dataStore  from '../Store';
 import { eventBus } from '../EventBus';
 
-// TODO: create <ps-viz-global-scene> that acts as a singleton
+// TODO: create <h-viz-global-scene> that acts as a singleton
 function buildSceneComponent() {
-  const scene = document.createElement('ps-viz-scene');
+  const scene = document.createElement('h-viz-scene');
   scene.setAttribute('embed', '');
   scene.style.setProperty('height', '100%');
   scene.style.setProperty('width', '100%');
@@ -13,7 +13,7 @@ function buildSceneComponent() {
   return scene;
 }
 
-const evalWrapperFn = htmlString => `<ps-viz-scene embed>${htmlString}</ps-viz-scene>`;
+const evalWrapperFn = htmlString => `<h-viz-scene embed>${htmlString}</h-viz-scene>`;
 
 class GraphicsWindow {
   constructor() {

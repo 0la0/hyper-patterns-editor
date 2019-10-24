@@ -1,6 +1,6 @@
 import 'hyper-patterns';
 import 'hyper-sound';
-import 'ps-visuals';
+import 'hyper-visuals';
 
 import 'codemirror/mode/jsx/jsx';
 import 'codemirror/addon/hint/javascript-hint';

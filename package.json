@@ -1,7 +1,7 @@
 {
-  "name": "ps-markup-editor",
+  "name": "hyper-patterns-editor",
   "version": "0.0.1",
-  "description": "Editor for ps-markup",
+  "description": "Editor for Hyper-Patterns",
   "main": "dist/index.js",
   "scripts": {
     "clean": "rm -rf dist",
@@ -23,7 +23,7 @@
     "live-dom": "../live-vdom",
     "hyper-patterns": "../hyper-patterns",
     "hyper-sound": "../hyper-sound",
-    "ps-visuals": "../ps-visuals",
+    "hyper-visuals": "../hyper-visuals",
     "sea": "github:0la0/sea#1.0.0"
   }
 }

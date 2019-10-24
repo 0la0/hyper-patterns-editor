@@ -12,7 +12,7 @@ export default class GraphicsTab {
   }
 
   setHtml(htmlString) {
-    const subSceneString = `<ps-viz-sub-scene>${htmlString}</ps-viz-sub-scene>`;
+    const subSceneString = `<h-viz-sub-scene>${htmlString}</h-viz-sub-scene>`;
     this.graphicsWindow.setTabHtml(this.id, subSceneString);
     persistTab(this.id, 'GRAPHICS', htmlString);
   }
