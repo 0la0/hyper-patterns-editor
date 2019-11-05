@@ -1,4 +1,5 @@
-import { Observable, ObservableObject } from 'sea';
+import { ObservableObject } from 'sea';
+import { saveToFile, openFromFile } from './FileSaver';
 
 const persistableProperties = [ 'graphics', 'tabs', 'projectSettings' ];
 const storageKey = 'SCENE';
@@ -14,13 +15,14 @@ class DataStore {
   }
 
   _serialize() {
-    return persistableProperties
+    const test = persistableProperties
       .reduce((acc, key) => Object.assign(acc, { [key]: this[key].value } ), {});
+    return encodeURIComponent(JSON.stringify(test));
   }
 
   _deserialize(serializedString) {
     try {
-      const data = JSON.parse(serializedString);
+      const data = JSON.parse(decodeURIComponent(serializedString));
       persistableProperties
         .filter(key => this[key])
         .forEach(key => this[key].setValue(data[key]));
@@ -30,8 +32,7 @@ class DataStore {
   }
 
   saveToLocalStorage() {
-    const serialized = JSON.stringify(this._serialize());
-    localStorage.setItem(storageKey, serialized);
+    localStorage.setItem(storageKey, this._serialize());
   }
 
   openFromLocalStorage() {
@@ -41,6 +42,15 @@ class DataStore {
       return;
     }
     this._deserialize(storedItem);
+  }
+
+  saveToFile() {
+    const serialized = this._serialize();
+    saveToFile(serialized, 'TEST.json');
+  }
+
+  openFromFile() {
+    openFromFile();
   }
 }
 

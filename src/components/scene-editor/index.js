@@ -25,8 +25,6 @@ export default class SceneEditor extends BaseComponent {
   }
 
   handleNameChange(event) {
-    console.log('scene name change', event.target.value);
-    // TODO: save to store
     dataStore.projectSettings.setValue({ name: event.target.value });
   }
 
@@ -37,5 +35,13 @@ export default class SceneEditor extends BaseComponent {
   openFromLocalStorage() {
     dataStore.openFromLocalStorage();
     document.dispatchEvent(new CustomEvent('SESSION_OPEN'));
+  }
+
+  saveToFile() {
+    dataStore.saveToFile();
+  }
+
+  openFromFile() {
+    console.log('TODO: open from file');
   }
 }
