@@ -12,13 +12,12 @@ export const audioMock = `
 <h-seq>
   <h-arp step="1" distance="12" rate="1" repeat="1">
     <h-pat-mod speed="1">
-      <h-pat-midi pattern="a:52 a:60 a:65 a:72">
-      </h-pat-midi>
-      <h-pat-midi pattern="a a a">
-      </h-pat-midi>
+      <h-pat pattern="a:52 a:60 a:65 a:72" />
+      <h-pat pattern="a a a" />
     </h-pat-mod>
   </h-arp>
-</h-seq>`;
+</h-seq>
+`;
 
 export const graphicsMock = `
 <h-viz-cone
@@ -26,4 +25,5 @@ export const graphicsMock = `
   rotation="0 0 0"
   scale="1 1 1"
   color="0.5 0 0.8"
-/>`;
+/>
+`;

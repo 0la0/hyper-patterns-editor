@@ -34,8 +34,9 @@ export default class CodeMirrorWrapper extends BaseComponent {
       throw new Error('CodeMirrorWrapper requires a content manager');
     }
     this.contentManager = contentManager;
-    this.fontSizeObserver = new Observer(fontSize => {
+    this.projectSettingsObserver = new Observer(({ fontSize }) => {
       this.dom.cm && this.dom.cm.style.setProperty('font-size', `${fontSize}px`);
+      this.codeMirror.refresh();
     });
   }
 
@@ -49,18 +50,23 @@ export default class CodeMirrorWrapper extends BaseComponent {
     };
     this.codeMirror = new CodeMirror(this.dom.editorContainer, codeMirrorOptions);
     this.codeMirror.setSize('100%', '100%');
-    dataStore.fontSize.observe(this.fontSizeObserver);
+    dataStore.projectSettings.observe(this.projectSettingsObserver);
     setTimeout(() => {
+      const { fontSize } = dataStore.projectSettings.value;
       this.codeMirror.refresh();
       this.dom.cm = this.dom.editorContainer.children[0];
+      this.dom.cm.style.setProperty('font-size', `${fontSize}px`);
     });
   }
 
   disconnectedCallback() {
-    dataStore.fontSize.removeObserver(this.fontSizeObserver);
+    dataStore.projectSettings.removeObserver(this.projectSettingsObserver);
   }
 
   focus() {
-    requestAnimationFrame(() => this.codeMirror.refresh());
+    requestAnimationFrame(() => {
+      this.codeMirror.refresh();
+      this.codeMirror.focus();
+    });
   }
 }

@@ -11,20 +11,20 @@ export default class AppearanceEditor extends BaseComponent {
 
   constructor() {
     super(style, markup, [ 'fontSizeInput' ]);
-    this.fontSizeObserver = new Observer(fontSize =>
+    this.projectSettingsObserver = new Observer(({ fontSize, }) =>
       this.dom.fontSizeInput.setAttribute('value', fontSize));
   }
 
   connectedCallback() {
-    dataStore.fontSize.observe(this.fontSizeObserver);
+    dataStore.projectSettings.observe(this.projectSettingsObserver);
   }
 
   disconnectedCallback() {
-    dataStore.fontSize.removeObserver(this.fontSizeObserver);
+    dataStore.projectSettings.removeObserver(this.projectSettingsObserver);
   }
 
   handleFontSizeChange(event) {
     const fontSize = parseInt(event.target.value, 10);
-    dataStore.fontSize.setValue(fontSize);
+    dataStore.projectSettings.setValue({ fontSize, });
   }
 }

@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "clean": "rm -rf dist",
-    "start": "webpack-dev-server -r esm --mode=development --inline --colors --progress --content-base src",
+    "start": "webpack-dev-server --mode=development --inline --colors --progress",
     "test": "NODE_PATH=./src/app mocha -r esm test/**/*.test.js",
     "lint": "eslint src"
   },
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "codemirror": "^5.48.0",
-    "live-dom": "../live-vdom",
+    "live-dom": "github:0la0/live-dom#1.0.0",
     "hyper-patterns": "../hyper-patterns",
     "hyper-sound": "../hyper-sound",
     "hyper-visuals": "../hyper-visuals",

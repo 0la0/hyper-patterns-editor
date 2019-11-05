@@ -27,7 +27,8 @@ const webpackConfig = {
     ]
   },
   devServer: {
-    port: 3001
+    port: 3001,
+    contentBase: path.resolve(__dirname, 'src'),
   },
   mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
   plugins: [
