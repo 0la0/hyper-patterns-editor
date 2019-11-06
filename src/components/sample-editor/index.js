@@ -1,7 +1,7 @@
 import HyperSound from 'hyper-sound';
 import BaseComponent from '../primitives/util/base-component';
 import SampleDisplay from './sample-display';
-import { loadAudioFilesAsArrayBuffers } from '../../services/FileLoader';
+import { loadAudioFilesAsArrayBuffers } from '../../services/FileUtil';
 import style from './sample-editor.css';
 import markup from './sample-editor.html';
 
