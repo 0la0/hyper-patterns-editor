@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "codemirror": "^5.48.0",
-    "live-dom": "github:0la0/live-dom#1.0.0",
+    "live-dom": "github:0la0/live-dom#v1.1.0",
     "hyper-patterns": "../hyper-patterns",
     "hyper-sound": "../hyper-sound",
     "hyper-visuals": "../hyper-visuals",

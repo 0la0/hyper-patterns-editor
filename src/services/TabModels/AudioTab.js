@@ -12,8 +12,9 @@ export default class AudioTab {
   }
 
   setHtml(htmlString) {
-    this.liveDom.setHtml(htmlString);
+    const result = this.liveDom.setHtml(htmlString);
     persistTab(this.id, 'AUDIO', htmlString);
+    return result;
   }
 
   getValue() {

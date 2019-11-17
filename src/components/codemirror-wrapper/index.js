@@ -9,6 +9,7 @@ import codeMirrorTheme from './code-mirror-theme.css';
 import codeMirrorStyleOverrides from './code-mirror-overrides.css';
 
 const styles = `${componentStyles} ${codeMirrorStylesheet} ${codeMirrorTheme} ${codeMirrorStyleOverrides}`;
+const NOTIFICATION_VISIBLE = 'notification-visible';
 
 const defaultEditorOptions = {
   mode: 'jsx',
@@ -29,7 +30,7 @@ export default class CodeMirrorWrapper extends BaseComponent {
   }
 
   constructor(contentManager) {
-    super(styles, markup, [ 'editorContainer' ]);
+    super(styles, markup, [ 'editorContainer', 'notificationPending', 'notificationError' ]);
     if (!contentManager) {
       throw new Error('CodeMirrorWrapper requires a content manager');
     }
@@ -44,12 +45,20 @@ export default class CodeMirrorWrapper extends BaseComponent {
     const codeMirrorOptions = {
       ...defaultEditorOptions,
       extraKeys: {
-        'Ctrl-Enter': cm => this.contentManager.setHtml(cm.getValue())
+        'Ctrl-Enter': () => this.submit(),
       },
       value: this.contentManager.getValue(),
     };
     this.codeMirror = new CodeMirror(this.dom.editorContainer, codeMirrorOptions);
     this.codeMirror.setSize('100%', '100%');
+    this.codeMirror.on('change', cm => {
+      const isPending = this.contentManager.getValue() !== cm.getValue();
+      requestAnimationFrame(() => {
+        isPending ?
+          this.dom.notificationPending.classList.add(NOTIFICATION_VISIBLE) :
+          this.dom.notificationPending.classList.remove(NOTIFICATION_VISIBLE);
+      });
+    });
     dataStore.projectSettings.observe(this.projectSettingsObserver);
     setTimeout(() => {
       const { fontSize } = dataStore.projectSettings.value;
@@ -67,6 +76,19 @@ export default class CodeMirrorWrapper extends BaseComponent {
     requestAnimationFrame(() => {
       this.codeMirror.refresh();
       this.codeMirror.focus();
+    });
+  }
+
+  submit() {
+    const result = this.contentManager.setHtml(this.codeMirror.getValue());
+    requestAnimationFrame(() => {
+      this.dom.notificationPending.classList.remove(NOTIFICATION_VISIBLE);
+      if (result.ok) {
+        this.dom.notificationError.classList.remove(NOTIFICATION_VISIBLE)
+      } else {
+        this.dom.notificationError.classList.add(NOTIFICATION_VISIBLE);
+        this.dom.notificationError.innerText = result.message;
+      }
     });
   }
 }
