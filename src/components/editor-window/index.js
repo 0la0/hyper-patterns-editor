@@ -53,7 +53,7 @@ export default class EditorWindow extends BaseComponent {
   }
 
   addTab(contentManager, defaultValue = '') {
-    const labelType = contentManager instanceof AudioTab ? 'Audio' : 'Graphics';
+    const labelType = contentManager instanceof AudioTab ? '\u266A' : '\u1F58';
     const labelCount = this.dom.tabContainer.children.length + 1;
     const tabWindow = new TabWindow({
       label: `${labelType} tab ${labelCount}`,

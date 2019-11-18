@@ -46,7 +46,7 @@ class GraphicsWindow {
 
   _updateDom() {
     const htmlString = Object.values(this.tabs).join('');
-    this.liveDom.setHtml(htmlString);
+    return this.liveDom.setHtml(htmlString);
   }
 
   addTab(tabId) {
@@ -60,7 +60,7 @@ class GraphicsWindow {
 
   setTabHtml(tabId, htmlString) {
     this.tabs[tabId] = htmlString;
-    this._updateDom();
+    return this._updateDom();
   }
 
   destroy() {

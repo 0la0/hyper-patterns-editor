@@ -36,7 +36,7 @@
   display: block;
   margin: 0 4px;
   padding: 0;
-  width: 28px;
+  width: 36px;
   height: 28px;
   border-radius: 50%;
   background-color: unset;
@@ -66,6 +66,16 @@
   transform: translate(-50%, -50%) rotateZ(90deg);
 }
 
+.add-symbol {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(25%, -75%);
+  color: transparent;
+  text-shadow: 0 0 0 var(--color-grey-dark);
+}
+
 .editor {
   display: none;
   flex: 1;
@@ -89,5 +99,5 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  margin-left: 24px;
+  margin: 0 4px 0 24px;
 }

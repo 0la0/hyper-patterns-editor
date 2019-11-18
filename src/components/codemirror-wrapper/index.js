@@ -46,6 +46,7 @@ export default class CodeMirrorWrapper extends BaseComponent {
       ...defaultEditorOptions,
       extraKeys: {
         'Ctrl-Enter': () => this.submit(),
+        'Ctrl-/': () => this.codeMirror.execCommand('toggleComment')
       },
       value: this.contentManager.getValue(),
     };
