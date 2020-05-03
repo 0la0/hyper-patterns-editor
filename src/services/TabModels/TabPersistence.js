@@ -13,15 +13,15 @@ export function persistTab(id, type, stringVal) {
 
 export function getPersistedValue(id) {
   const tab = store.tabs.value[id];
-    if (!tab) {
-      return '';
-    }
-    try {
-      return atob(tab.encodedValue);
-    } catch(error) {
-      console.error(error);
-      return '';
-    }
+  if (!tab) {
+    return '';
+  }
+  try {
+    return atob(tab.encodedValue);
+  } catch(error) {
+    console.error(error);
+    return '';
+  }
 }
 
 export function deleteById(id) {

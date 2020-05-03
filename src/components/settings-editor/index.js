@@ -8,12 +8,9 @@ export default class SettingsEditor extends BaseComponent {
   }
 
   constructor() {
-    super(style, markup, [ 'appearance', 'graphics', 'version', ]);
+    super(style, markup, [ 'version', 'sceneEditor' ]);
+    // eslint-disable-next-line no-undef
     this.dom.version.innerText = VERSION;
-    this.editorContainers = [
-      this.dom.appearance,
-      this.dom.graphics,
-    ];
     this.openEditor = false;
   }
 
@@ -23,5 +20,9 @@ export default class SettingsEditor extends BaseComponent {
 
   handleClose(event) {
     this.closeCallback && this.closeCallback(event);
+  }
+
+  openFromLocalStorage() {
+    this.dom.sceneEditor.openFromLocalStorage();
   }
 }

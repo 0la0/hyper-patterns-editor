@@ -46,7 +46,7 @@ export default class CodeMirrorWrapper extends BaseComponent {
       ...defaultEditorOptions,
       extraKeys: {
         'Ctrl-Enter': () => this.submit(),
-        'Ctrl-/': () => this.codeMirror.execCommand('toggleComment')
+        'Ctrl-/': () => this.codeMirror.execCommand('toggleComment'),
       },
       value: this.contentManager.getValue(),
     };
@@ -85,7 +85,7 @@ export default class CodeMirrorWrapper extends BaseComponent {
     requestAnimationFrame(() => {
       this.dom.notificationPending.classList.remove(NOTIFICATION_VISIBLE);
       if (result.ok) {
-        this.dom.notificationError.classList.remove(NOTIFICATION_VISIBLE)
+        this.dom.notificationError.classList.remove(NOTIFICATION_VISIBLE);
       } else {
         this.dom.notificationError.classList.add(NOTIFICATION_VISIBLE);
         this.dom.notificationError.innerText = result.message;

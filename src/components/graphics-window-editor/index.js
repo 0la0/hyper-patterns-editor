@@ -108,7 +108,7 @@ export default class GraphicsWindowEditor extends BaseComponent {
       this.dom.resizableRect.style.setProperty('height', `${graphicsState.height * 100}%`);
       if (!this.state.draggingStrategy) {
         const left = graphicsState.left * parentRect.width;
-        const bottom = graphicsState.bottom * parentRect.height 
+        const bottom = graphicsState.bottom * parentRect.height;
         this.dom.resizableRect.style.setProperty('left', `${left}px`);
         this.dom.resizableRect.style.setProperty('bottom', `${bottom}px`);
       }
