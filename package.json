@@ -14,14 +14,14 @@
     "esm": "^3.2.22",
     "mocha": "^7.1.1",
     "raw-loader": "^4.0.1",
-    "webpack": "^5.0.0-beta.15",
+    "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
     "codemirror": "^5.53.2",
     "live-dom": "github:0la0/live-dom#v1.4.0",
-    "hyper-patterns": "github:0la0/hyper-patterns#v0.1.2",
+    "hyper-patterns": "../hyper-patterns",
     "hyper-sound": "../hyper-sound",
     "hyper-visuals": "../hyper-visuals",
     "sea": "github:0la0/sea#v1.1.0"
