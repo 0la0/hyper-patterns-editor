@@ -6,6 +6,10 @@ import { getJsonFromFile } from '../../services/FileUtil';
 import style from './scene-editor.css';
 import markup from './scene-editor.html';
 
+const showNotification = message => document.dispatchEvent(
+  new CustomEvent('SHOW_NOTIFICATION', { detail: { message, }})
+);
+
 export default class SceneEditor extends BaseComponent {
   static get tag() {
     return 'scene-editor';
@@ -33,24 +37,34 @@ export default class SceneEditor extends BaseComponent {
   saveToLocalStorage() {
     const serialized = dataStore.getSerializedString();
     FileStorage.saveToLocalStorage(serialized);
+    showNotification('Project saved to local storage');
   }
 
-  openFromLocalStorage() {
+  openFromLocalStorage(supressNotification) {
     const serialized = FileStorage.openFromLocalStorage();
     dataStore.hydrate(serialized);
     document.dispatchEvent(new CustomEvent('SESSION_OPEN'));
+    if (!supressNotification) {
+      showNotification('Project opened from local storage');
+    }
   }
 
   saveToFile() {
     const serialized = dataStore.getSerializedString();
     FileStorage.saveToFile(serialized, 'FILE_TEST.json');
+    showNotification('Project saved to file');
   }
 
   openFromFile() {
     FileStorage.openFilePicker('application/json')
       .then(selectedFiles => getJsonFromFile(selectedFiles[0]))
       .then(serialized => dataStore.hydrate(serialized))
-      .then(() => document.dispatchEvent(new CustomEvent('SESSION_OPEN')))
-      .catch(error => console.log('error', error));
+      .then(() => {
+        showNotification('Project opened from file');
+      })
+      .catch(error => {
+        console.log('error', error);
+        showNotification(error.message);
+      });
   }
 }

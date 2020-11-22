@@ -22,7 +22,7 @@ export default class SettingsEditor extends BaseComponent {
     this.closeCallback && this.closeCallback(event);
   }
 
-  openFromLocalStorage() {
-    this.dom.sceneEditor.openFromLocalStorage();
+  openFromLocalStorage(suppressNotificaiton) {
+    this.dom.sceneEditor.openFromLocalStorage(suppressNotificaiton);
   }
 }

@@ -21,6 +21,7 @@ const components = [
   Primitives.SliderHorizontal,
   Primitives.RouterOutlet,
   Primitives.TextInput,
+  Primitives.ToastNotifcation,
   App,
   AppearanceEditor,
   CodemirrorWrapper,

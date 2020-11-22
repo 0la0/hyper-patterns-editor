@@ -31,7 +31,7 @@ export default class EditorRoot extends BaseComponent {
     GlobalListeners.init();
     eventBus.subscribe(this.escapeKeySubscription);
     this.dom.settingsEditor.setCloseCallback(this.closeEditor);
-    setTimeout(() => this.dom.settingsEditor.openFromLocalStorage());
+    setTimeout(() => this.dom.settingsEditor.openFromLocalStorage(true));
   }
 
   disconnectedCallback() {
