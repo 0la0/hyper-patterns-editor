@@ -4,13 +4,14 @@ import CodemirrorWrapper from '../codemirror-wrapper';
 import EditorRoot from '../editor-root';
 import EditorTab from '../editor-window/editor-tab';
 import EditorWindow from '../editor-window';
+import DefautSamples from '../sample-manager/default-samples';
 import GraphicsWindowEditor from '../graphics-window-editor';
 import MetronomeController from '../metronome-ctrl';
 import MidiEditor from '../midi-editor';
 import MidiDevice from '../midi-editor/midi-device';
 import Primitives from '../primitives';
-import SampleDisplay from '../sample-editor/sample-display';
-import SampleEditor from '../sample-editor';
+import SampleDisplay from '../sample-manager/sample-display';
+import SampleEditor from '../sample-manager/sample-editor';
 import SceneEditor from '../scene-editor';
 import SettingsEditor from '../settings-editor';
 
@@ -28,6 +29,7 @@ const components = [
   EditorRoot,
   EditorTab,
   EditorWindow,
+  DefautSamples,
   GraphicsWindowEditor,
   MetronomeController,
   MidiEditor,

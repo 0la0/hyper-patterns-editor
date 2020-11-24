@@ -6,6 +6,17 @@
   padding: 8px;
 }
 
+.deletable {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+}
+.deletable-suppressed {
+  display: none;
+}
+
 .dots {
   flex: 1;
   border-bottom: 1px dotted #CCCCCC66;
@@ -21,3 +32,4 @@
 .delete-button {
   align-self: flex-end;
 }
+

@@ -1,7 +1,7 @@
 import HyperSound from 'hyper-sound';
-import BaseComponent from '../primitives/util/base-component';
-import SampleDisplay from './sample-display';
-import { loadAudioFilesAsArrayBuffers } from '../../services/FileUtil';
+import BaseComponent from '../../primitives/util/base-component';
+import SampleDisplay from '../sample-display';
+import { loadAudioFilesAsArrayBuffers } from '../../../services/FileUtil';
 import style from './sample-editor.css';
 import markup from './sample-editor.html';
 
@@ -21,7 +21,7 @@ export default class SampleEditor extends BaseComponent {
       const sampleKeys = HyperSound.getSampleNames();
       [ ...this.dom.sampleList.children ].forEach(ele => this.dom.sampleList.removeChild(ele));
       sampleKeys.forEach(sampleName =>
-        this.dom.sampleList.appendChild(new SampleDisplay(sampleName, this._populateSampleKeys.bind(this))));
+        this.dom.sampleList.appendChild(new SampleDisplay({ sampleName, onDeleteCallback: this._populateSampleKeys.bind(this), })));
     });
   }
 

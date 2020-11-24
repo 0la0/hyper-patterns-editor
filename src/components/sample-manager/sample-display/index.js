@@ -8,11 +8,14 @@ export default class SampleDisplay extends BaseComponent {
     return 'sample-display';
   }
 
-  constructor(sampleName, onDeleteCallback) {
-    super(style, markup, [ 'sampleName' ]);
+  constructor({ sampleName = '', onDeleteCallback, }) {
+    super(style, markup, [ 'deletableSection', 'sampleName' ]);
     this.sampleName = sampleName;
     this.onDeleteCallback = onDeleteCallback;
     this.dom.sampleName.setAttribute('value', sampleName);
+    if (!onDeleteCallback) {
+      this.dom.deletableSection.classList.add('deletable-suppressed');
+    }
   }
 
   playSample() {
