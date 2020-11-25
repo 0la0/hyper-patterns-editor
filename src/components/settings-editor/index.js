@@ -21,8 +21,4 @@ export default class SettingsEditor extends BaseComponent {
   handleClose(event) {
     this.closeCallback && this.closeCallback(event);
   }
-
-  openFromLocalStorage(suppressNotificaiton) {
-    this.dom.sceneEditor.openFromLocalStorage(suppressNotificaiton);
-  }
 }

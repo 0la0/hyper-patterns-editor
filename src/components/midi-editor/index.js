@@ -40,6 +40,9 @@ export default class MidiEditor extends BaseComponent {
   populateSelector() {
     provideMidiFactory()
       .then(midiFactory => {
+
+        // TODO: visual indication that nothing is connected
+
         const inputDeviceNames = midiFactory.getInputList().map(device => device.name);
         const outputDeviceNames = midiFactory.getOutputList().map(device => device.name);
         const uniqueNames = new Set([].concat(inputDeviceNames, outputDeviceNames));
@@ -49,7 +52,10 @@ export default class MidiEditor extends BaseComponent {
           return new MidiViewModel(deviceName, hasOutput, inputRef);
         });
       })
-      .then(midiViewModels => this._populateDeviceList(midiViewModels));
+      .then(midiViewModels => this._populateDeviceList(midiViewModels))
+      .catch(error => {
+        // TODO: visual indication of error
+      });
   }
 
   renderNoDevices() {

@@ -2,6 +2,8 @@ import { Subscription } from 'sea';
 import BaseComponent from '../primitives/util/base-component';
 import { eventBus, } from '../../services/EventBus';
 import GlobalListeners from '../../services/GlobalListeners';
+import dataStore from '../../services/Store';
+import * as FileStorage from '../../services/FileStorage';
 import markup from './editor-root.html';
 import style from './editor-root.css';
 
@@ -37,7 +39,9 @@ export default class EditorRoot extends BaseComponent {
     eventBus.subscribe(this.escapeKeySubscription);
     this.dom.settingsEditor.setCloseCallback(this.closeEditor);
     this.dom.scrim.addEventListener('click', this.closeEditor);
-    setTimeout(() => this.dom.settingsEditor.openFromLocalStorage(true));
+    setTimeout(() => {
+      this._openFromLocalStorage();
+    });
   }
 
   disconnectedCallback() {
@@ -48,5 +52,11 @@ export default class EditorRoot extends BaseComponent {
 
   handleSettingsClick(event) {
     event.target.isOn ? this.openEditor() : this.closeEditor();
+  }
+
+  _openFromLocalStorage() {
+    const serialized = FileStorage.openFromLocalStorage();
+    dataStore.hydrate(serialized);
+    document.dispatchEvent(new CustomEvent('SESSION_OPEN'));
   }
 }

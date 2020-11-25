@@ -8,16 +8,24 @@
 </div>
 
 <div class="content">
-  <scene-editor id="sceneEditor"></scene-editor>
-  <div class="divider"></div>
-  <appearance-editor></appearance-editor>
-  <div class="divider"></div>
-  <graphics-window-editor></graphics-window-editor>
-  <div class="divider"></div>
-  <sample-editor></sample-editor>
-  <div class="divider"></div>
-  <default-samples></default-samples>
-  <div class="divider"></div>
+  <expandable-section label="Scene">
+    <scene-editor id="sceneEditor"></scene-editor>
+  </expandable-section>
+  <expandable-section label="Appearance">
+    <appearance-editor></appearance-editor>
+  </expandable-section>
+  <expandable-section label="Graphics">
+    <graphics-window-editor></graphics-window-editor>
+  </expandable-section>
+  <expandable-section label="Samples">
+    <sample-editor></sample-editor>
+  </expandable-section>
+  <expandable-section label="Default Samples">
+    <default-samples></default-samples>
+  </expandable-section>
+  <expandable-section label="MIDI">
+    <midi-editor></midi-editor>
+  </expandable-section>
 </div>
 
 <p class="version">

@@ -1,0 +1,29 @@
+.expandable-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-grey-light);
+  color: var(--color-grey-darker);
+  cursor: pointer;
+  padding: 12px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  border-top: 1px solid var(--color-black-light);
+  transition: background-color 0.15s ease-out;
+}
+
+.expandable-active  {}
+
+.expandable-content {
+  padding: 0px 8px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.15s ease-out, padding 0.15s ease-out;
+}
+
+.expandable-content-active {
+  padding: 8px 8px;
+}

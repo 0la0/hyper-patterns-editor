@@ -19,6 +19,7 @@ const components = [
   Primitives.TextButton,
   Primitives.ToggleButton,
   Primitives.ComboBox,
+  Primitives.ExpandableSection,
   Primitives.SliderHorizontal,
   Primitives.RouterOutlet,
   Primitives.TextInput,
