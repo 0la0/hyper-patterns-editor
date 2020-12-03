@@ -1,7 +1,7 @@
 import HyperSound from 'hyper-sound';
 import BaseComponent from '../../primitives/util/base-component';
 import SampleDisplay from '../sample-display';
-import { loadAudioFilesAsArrayBuffers } from '../../../services/FileUtil';
+import { openFilesAsAudioBuffers } from '../../../services/FileUtil';
 import style from './sample-editor.css';
 import markup from './sample-editor.html';
 
@@ -14,6 +14,15 @@ export default class SampleEditor extends BaseComponent {
     super(style, markup, [ 'sampleList' ]);
     this.handleClose = closeCallback;
     this._populateSampleKeys();
+    this.refreshSamples = this._populateSampleKeys.bind(this);
+  }
+
+  connectedCallback() {
+    document.addEventListener('REFRESH_SAMPLES', this.refreshSamples);
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('REFRESH_SAMPLES', this.refreshSamples);
   }
 
   _populateSampleKeys() {
@@ -26,7 +35,7 @@ export default class SampleEditor extends BaseComponent {
   }
 
   loadSample() {
-    loadAudioFilesAsArrayBuffers()
+    openFilesAsAudioBuffers()
       .then((nameArrayBufferPairs) => Promise.all(
         nameArrayBufferPairs.map(({ name, arrayBuffer }) => HyperSound.addSample(name, arrayBuffer))
       ))

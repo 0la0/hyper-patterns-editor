@@ -25,7 +25,7 @@ function getArrayBufferFromFile(file) {
   });
 }
 
-export function loadAudioFilesAsArrayBuffers() {
+export function openFilesAsAudioBuffers() {
   return openFilePicker('audio/*')
     .then(files => Promise.all([ ...files ].map(file => getArrayBufferFromFile(file))));
 }

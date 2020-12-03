@@ -1,15 +1,8 @@
+import HyperPatterns from 'hyper-patterns';
 import BaseComponent from '../primitives/util/base-component';
 import MidiDevice from './midi-device';
-// import provideMidiFactory from 'services/midi/midiDeviceFactory';
 import style from './midi-editor.css';
 import markup from './midi-editor.html';
-
-function provideMidiFactory() {
-  return Promise.resolve({
-    getInputList: () => [],
-    getOutputList: () => [],
-  });
-}
 
 class MidiViewModel {
   constructor(deviceName, hasOutput, inputRef) {
@@ -38,11 +31,9 @@ export default class MidiEditor extends BaseComponent {
   }
 
   populateSelector() {
-    provideMidiFactory()
+    HyperPatterns.provideMidiFactory()
       .then(midiFactory => {
-
         // TODO: visual indication that nothing is connected
-
         const inputDeviceNames = midiFactory.getInputList().map(device => device.name);
         const outputDeviceNames = midiFactory.getOutputList().map(device => device.name);
         const uniqueNames = new Set([].concat(inputDeviceNames, outputDeviceNames));
