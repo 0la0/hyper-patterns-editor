@@ -56,7 +56,8 @@ export default class EditorRoot extends BaseComponent {
 
   _openFromLocalStorage() {
     const serialized = FileStorage.openFromLocalStorage();
-    dataStore.hydrate(serialized);
-    document.dispatchEvent(new CustomEvent('SESSION_OPEN'));
+    dataStore.hydrate(serialized)
+      .then(() => document.dispatchEvent(new CustomEvent('SESSION_OPEN')))
+      .catch(error => console.log(error));
   }
 }

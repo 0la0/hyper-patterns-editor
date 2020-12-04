@@ -18,11 +18,11 @@ export default class SampleEditor extends BaseComponent {
   }
 
   connectedCallback() {
-    document.addEventListener('REFRESH_SAMPLES', this.refreshSamples);
+    document.addEventListener('SESSION_OPEN', this.refreshSamples);
   }
 
   disconnectedCallback() {
-    document.removeEventListener('REFRESH_SAMPLES', this.refreshSamples);
+    document.removeEventListener('SESSION_OPEN', this.refreshSamples);
   }
 
   _populateSampleKeys() {

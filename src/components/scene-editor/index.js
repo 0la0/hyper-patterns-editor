@@ -42,11 +42,17 @@ export default class SceneEditor extends BaseComponent {
 
   openFromLocalStorage(supressNotification) {
     const serialized = FileStorage.openFromLocalStorage();
-    dataStore.hydrate(serialized);
-    document.dispatchEvent(new CustomEvent('SESSION_OPEN'));
-    if (!supressNotification) {
-      showNotification('Project opened from local storage');
-    }
+    dataStore.hydrate(serialized)
+      .then(() => {
+        document.dispatchEvent(new CustomEvent('SESSION_OPEN'));
+        if (!supressNotification) {
+          showNotification('Project opened from local storage');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        showNotification(error.message);
+      });
   }
 
   saveToFile() {
@@ -60,6 +66,7 @@ export default class SceneEditor extends BaseComponent {
       .then(selectedFiles => getJsonFromFile(selectedFiles[0]))
       .then(serialized => dataStore.hydrate(serialized))
       .then(() => {
+        document.dispatchEvent(new CustomEvent('SESSION_OPEN'));
         showNotification('Project opened from file');
       })
       .catch(error => {

@@ -2,25 +2,20 @@ import { Observable, ObservableObject } from 'sea';
 import HyperSound from 'hyper-sound';
 
 function base64ToArrayBuffer(base64) {
-  var binary_string = window.atob(base64);
-  var len = binary_string.length;
-  var bytes = new Uint8Array(len);
-  for (var i = 0; i < len; i++) {
-    bytes[i] = binary_string.charCodeAt(i);
-  }
-  return bytes.buffer;
+  const binaryString = window.atob(base64);
+  const byteArray = [...binaryString]
+    .map(char => char.charCodeAt(0));
+  const typedByteArray = Uint8Array.from(byteArray);
+  return typedByteArray.buffer;
 }
 
-function arrayBufferToBase64( buffer ) {
-  let binary = '';
-  let bytes = new Uint8Array( buffer );
-  let len = bytes.byteLength;
-  for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[ i ]);
-  }
-  return window.btoa( binary );
+function arrayBufferToBase64(arrayBuffer) {
+  const byteArray = Array.from(new Uint8Array(arrayBuffer));
+  const binaryString = byteArray
+    .map(byte => String.fromCharCode(byte))
+    .join('');
+  return window.btoa(binaryString);
 }
-
 
 function getSerializedSampleMap() {
   return HyperSound.getSampleNames().reduce((acc, sampleKey) => { 
@@ -45,11 +40,10 @@ class DataStore {
 
   getSerializedString() {
     const serialzedSampleMap = getSerializedSampleMap();
-    // TODO: rename from "test"
-    const test = persistableProperties
+    const persistableMap = persistableProperties
       .reduce((acc, key) => Object.assign(acc, { [key]: this[key].value } ), {});
-    test.samples = serialzedSampleMap;
-    return encodeURIComponent(JSON.stringify(test));
+    persistableMap.samples = serialzedSampleMap;
+    return encodeURIComponent(JSON.stringify(persistableMap));
   }
 
   hydrate(serializedString = '') {
@@ -59,12 +53,15 @@ class DataStore {
         .filter(key => this[key] && data[key] !== undefined)
         .forEach(key => this[key].setValue(data[key]));
       if (data.samples && Object.keys(data.samples).length) {
-        Object.keys(data.samples).forEach(sampleKey => {
-          const sampleBase64 = data.samples[sampleKey];
-          const sampleArrayBuffer = base64ToArrayBuffer(sampleBase64);
-          HyperSound.addSample(sampleKey, sampleArrayBuffer);
-        });
-        document.dispatchEvent(new CustomEvent('REFRESH_SAMPLES'));
+        return Promise.all(
+          Object.keys(data.samples).map(sampleKey => {
+            console.log('deserialize sample', sampleKey);
+            const sampleBase64 = data.samples[sampleKey];
+            const sampleArrayBuffer = base64ToArrayBuffer(sampleBase64);
+            return HyperSound.addSample(sampleKey, sampleArrayBuffer);
+          }));
+      } else {
+        return Promise.resolve();
       }
     } catch(error) {
       console.log('Deserialize error', error);
