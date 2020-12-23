@@ -30,7 +30,14 @@ const persistableProperties = [ 'bpm', 'graphics', 'tabs', 'projectSettings' ];
 class DataStore {
   constructor() {
     this.bpm = new Observable(120);
-    this.graphics = new ObservableObject({ isOn: false, width: 0.5, height: 0.5, left: 0, bottom: 0 });
+    this.graphics = new ObservableObject({
+      isOn: false,
+      width: 0.5,
+      height: 0.5,
+      left: 0,
+      bottom: 0,
+      latency: 0,
+    });
     this.tabs = new ObservableObject({});
     this.projectSettings = new ObservableObject({
       name: 'hyper-project',

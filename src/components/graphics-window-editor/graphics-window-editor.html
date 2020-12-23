@@ -11,6 +11,17 @@
 
 <div id="graphicsSettings" class="graphics-settings">
   <div class="settings-row">
+    <p>Graphics Latency</p>
+    <text-input
+      id="latencyInput"
+      type="number"
+      value="0"
+      change="handleLatencyChange"
+      class="">
+    </text-input>
+  </div>
+
+  <div class="settings-row">
     <text-button
       id="graphicsToggleButton"
       class="setting-value"

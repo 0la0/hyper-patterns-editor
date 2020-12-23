@@ -1,4 +1,5 @@
 import { Observer } from 'sea';
+import HyperVisuals from 'hyper-visuals';
 import BaseComponent from '../primitives/util/base-component';
 import { clamp } from '../../services/Math';
 import dataStore  from '../../services/Store';
@@ -11,7 +12,7 @@ export default class GraphicsWindowEditor extends BaseComponent {
   }
 
   constructor() {
-    super(style, markup, [ 'graphicsSettings', 'graphicsToggleButton', 'resizableContainer', 'resizableRect', 'resizableCtrlNE' ]);
+    super(style, markup, [ 'graphicsSettings', 'graphicsToggleButton', 'latencyInput', 'resizableContainer', 'resizableRect', 'resizableCtrlNE' ]);
     this.state = {
       draggingStrategy: null,
       left: 0,
@@ -101,6 +102,8 @@ export default class GraphicsWindowEditor extends BaseComponent {
 
   handleDataStoreUpdate(graphicsState) {
     this.dom.graphicsToggleButton.setValue(graphicsState.isOn);
+    this.dom.latencyInput.setAttribute('value', graphicsState.latency);
+    HyperVisuals.setLatencyMilliseconds(graphicsState.latency);
     if (graphicsState.isOn) {
       this.dom.graphicsSettings.classList.add('graphics-settings-active');
       const parentRect = this.dom.resizableContainer.getBoundingClientRect();
@@ -124,5 +127,10 @@ export default class GraphicsWindowEditor extends BaseComponent {
       left: 0,
       bottom: 0
     });
+  }
+
+  handleLatencyChange(event) {
+    const latency = parseInt(event.target.value, 10);
+    dataStore.graphics.setValue({ latency, });
   }
 }
