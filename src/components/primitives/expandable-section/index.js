@@ -31,16 +31,12 @@ export default class ExpandableSection extends BaseComponent {
   }
 
   open() {
-    this.dom.expandableButton.classList.add('expandable-active');
     this.dom.expandableContent.classList.add('expandable-content-active');
     this.dom.buttonIcon.innerText = HtmlSymbol.minus;
-    this.dom.expandableContent.style.maxHeight = `${this.dom.expandableContent.scrollHeight}px`;
   }
 
   close() {
-    this.dom.expandableButton.classList.remove('expandable-active');
     this.dom.expandableContent.classList.remove('expandable-content-active');
     this.dom.buttonIcon.innerText = HtmlSymbol.plus;
-    this.dom.expandableContent.style.maxHeight = '0px';
   }
 }

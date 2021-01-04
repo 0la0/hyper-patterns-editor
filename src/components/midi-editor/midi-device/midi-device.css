@@ -25,13 +25,13 @@
   display: inline-block;
 }
 
-.message-container {
+/* .message-container {
   display: none;
 }
 
 .message-container--visible {
   display: block;
-}
+} */
 
 .property-row {
   display: flex;

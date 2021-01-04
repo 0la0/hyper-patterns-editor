@@ -1,3 +1,22 @@
 .refresh-button {
   display: inline-block;
 }
+
+.device-list {
+  margin-top: 8px;
+}
+
+.no-devices {
+  animation-duration: 0.5s;
+  animation-name: no-devices-indicator;
+  padding: 8px;
+}
+
+@keyframes no-devices-indicator {
+  from {
+    background-color: var(--color-error);
+  } 
+  to {
+    background-color: none;
+  }
+}

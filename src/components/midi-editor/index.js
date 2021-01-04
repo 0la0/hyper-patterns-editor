@@ -33,7 +33,6 @@ export default class MidiEditor extends BaseComponent {
   populateSelector() {
     HyperPatterns.provideMidiFactory()
       .then(midiFactory => {
-        // TODO: visual indication that nothing is connected
         const inputDeviceNames = midiFactory.getInputList().map(device => device.name);
         const outputDeviceNames = midiFactory.getOutputList().map(device => device.name);
         const uniqueNames = new Set([].concat(inputDeviceNames, outputDeviceNames));
@@ -46,12 +45,13 @@ export default class MidiEditor extends BaseComponent {
       .then(midiViewModels => this._populateDeviceList(midiViewModels))
       .catch(error => {
         // TODO: visual indication of error
+        console.log(error);
       });
   }
 
   renderNoDevices() {
     const deviceElement = document.createElement('p');
-    deviceElement.classList.add('midi-device');
+    deviceElement.classList.add('midi-device', 'no-devices');
     deviceElement.textContent = 'No devices detected';
     this.dom.deviceList.appendChild(deviceElement);
   }

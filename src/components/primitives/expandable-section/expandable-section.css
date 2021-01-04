@@ -15,15 +15,12 @@
   transition: background-color 0.15s ease-out;
 }
 
-.expandable-active  {}
-
 .expandable-content {
-  padding: 0px 8px;
-  max-height: 0;
+  padding: 8px 8px;
   overflow: hidden;
-  transition: max-height 0.15s ease-out, padding 0.15s ease-out;
+  display: none;
 }
 
 .expandable-content-active {
-  padding: 8px 8px;
+  display: block;
 }

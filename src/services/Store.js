@@ -1,5 +1,6 @@
 import { Observable, ObservableObject } from 'sea';
 import HyperSound from 'hyper-sound';
+import { MidiAliasModel, midiDeviceAliases, } from 'hyper-patterns';
 
 function base64ToArrayBuffer(base64) {
   const binaryString = window.atob(base64);
@@ -46,23 +47,34 @@ class DataStore {
   }
 
   getSerializedString() {
-    const serialzedSampleMap = getSerializedSampleMap();
+    const deviceAliases = midiDeviceAliases.getAllNames()
+      .map(aliasName => midiDeviceAliases.getAlias(aliasName))
+      .filter(Boolean).map(aliasModel => aliasModel.toJson());
+    const samples = getSerializedSampleMap();
+    const initialMap = {
+      midiDeviceAliases: deviceAliases,
+      samples,
+    };
     const persistableMap = persistableProperties
-      .reduce((acc, key) => Object.assign(acc, { [key]: this[key].value } ), {});
-    persistableMap.samples = serialzedSampleMap;
+      .reduce((acc, key) => Object.assign(acc, { [key]: this[key].value } ), initialMap);
     return encodeURIComponent(JSON.stringify(persistableMap));
   }
 
-  hydrate(serializedString = '') {
+  hydrate(serializedString) {
     try {
-      const data = JSON.parse(decodeURIComponent(serializedString));
+      const data = serializedString ? JSON.parse(decodeURIComponent(serializedString)) : {};
       persistableProperties
         .filter(key => this[key] && data[key] !== undefined)
         .forEach(key => this[key].setValue(data[key]));
+      if (Array.isArray(data.midiDeviceAliases)) {
+        data.midiDeviceAliases.forEach(aliasJson => {
+          const aliasModel = MidiAliasModel.fromJson(aliasJson);
+          midiDeviceAliases.setAlias(aliasModel.getAliasName(), aliasModel);
+        });
+      }
       if (data.samples && Object.keys(data.samples).length) {
         return Promise.all(
           Object.keys(data.samples).map(sampleKey => {
-            console.log('deserialize sample', sampleKey);
             const sampleBase64 = data.samples[sampleKey];
             const sampleArrayBuffer = base64ToArrayBuffer(sampleBase64);
             return HyperSound.addSample(sampleKey, sampleArrayBuffer);

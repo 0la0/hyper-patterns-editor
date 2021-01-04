@@ -1,3 +1,4 @@
+import { MidiMessage } from 'hyper-patterns';
 import BaseComponent from '../../primitives/util/base-component';
 // import MidiMessage, { getCommandString, } from 'services/midi/MidiMessage';
 import style from './midi-device.css';
@@ -21,7 +22,7 @@ export default class MidiDevice extends BaseComponent {
   }
 
   constructor(device) {
-    super(style, markup, [ 'label', 'input', 'output', 'toggleButton', 'messageContainer', 'command', 'channel', 'note', 'value' ]);
+    super(style, markup, [ 'label', 'input', 'output', 'toggleButton', 'messageContainer' ]);
     this.device = device;
     this.dom.label.textContent = device.getDeviceName();
     this.isPrintingInput = false;
@@ -45,16 +46,18 @@ export default class MidiDevice extends BaseComponent {
   }
 
   handleDeviceMessage(event) {
+    // console.log(event.data);
     if (event.data.length === 1 && event.data[0] === 248) {
       return;
     }
     this.message = MidiMessage.fromSerialized(event.data);
-    requestAnimationFrame(() => {
-      this.dom.command.textContent = getCommandString(this.message.command);
-      this.dom.channel.textContent = this.message.channel;
-      this.dom.note.textContent = this.message.note;
-      this.dom.value.textContent = this.message.value;
-    });
+    console.log(this.message);
+    // requestAnimationFrame(() => {
+    //   this.dom.command.textContent = this.message.getCommandString();
+    //   this.dom.channel.textContent = this.message.channel;
+    //   this.dom.note.textContent = this.message.note;
+    //   this.dom.value.textContent = this.message.value;
+    // });
   }
 
   onToggleClick(event) {

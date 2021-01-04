@@ -7,6 +7,8 @@ import EditorWindow from '../editor-window';
 import DefautSamples from '../sample-manager/default-samples';
 import GraphicsWindowEditor from '../graphics-window-editor';
 import MetronomeController from '../metronome-ctrl';
+import MidiAlias from '../midi-editor/midi-alias';
+import MidiAliasList from '../midi-editor/midi-alias-list';
 import MidiEditor from '../midi-editor';
 import MidiDevice from '../midi-editor/midi-device';
 import Primitives from '../primitives';
@@ -33,6 +35,8 @@ const components = [
   DefautSamples,
   GraphicsWindowEditor,
   MetronomeController,
+  MidiAlias,
+  MidiAliasList,
   MidiEditor,
   MidiDevice,
   SampleDisplay,

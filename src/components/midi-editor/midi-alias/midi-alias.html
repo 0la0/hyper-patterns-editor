@@ -1,0 +1,93 @@
+
+<div class="alias-container">
+  <div class="title-row">
+    <div class="row">
+      <label class="setting-label alias-label" for="aliasName">Alias:</label>
+      <text-input
+        id="aliasName"
+        value=""
+        change="handleAliasNameChange"
+        class=""
+        textAlign="left"
+      >
+      </text-input>
+    </div>
+    <text-button
+      class="remove-alias"
+      click="onDelete"
+      label="Remove">
+    </text-button>
+  </div>
+
+  <div class="settings-row">
+    <label class="setting-label" for="deviceName">Device Name:</label>
+    <text-input
+      id="deviceName"
+      value=""
+      change="handleDeviceNameChange"
+      class=""
+      textAlign="left"
+    >
+    </text-input>
+  </div>
+  
+  <div class="settings-row">
+    <label class="setting-label" for="channel">Channel:</label>
+    <text-input
+      id="channel"
+      type="number"
+      value=""
+      change="handleChannelChange"
+      min="0"
+      max="15"
+      class=""
+      textAlign="left"
+    >
+    </text-input>
+  </div>
+  
+  <div class="settings-row">
+    <label class="setting-label" for="note">Note:</label>
+    <text-input
+      id="note"
+      type="number"
+      value=""
+      change="handleNoteChange"
+      min="0"
+      max="127"
+      class=""
+      textAlign="left"
+    >
+    </text-input>
+  </div>
+  
+  <div class="settings-row">
+    <label class="setting-label" for="value">Value:</label>
+    <text-input
+      id="value"
+      type="number"
+      value=""
+      change="handleValueChange"
+      min="0"
+      max="127"
+      class=""
+      textAlign="left"
+    >
+    </text-input>
+  </div>
+  
+  <div class="settings-row">
+    <label class="setting-label" for="duration">Duration:</label>
+    <text-input
+      id="duration"
+      type="number"
+      value=""
+      change="handleDurationChange"
+      min="0"
+      class=""
+      textAlign="left"
+    >
+    </text-input>
+  </div>
+</div>
+  
