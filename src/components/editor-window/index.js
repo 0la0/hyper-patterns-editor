@@ -21,6 +21,8 @@ export default class EditorWindow extends BaseComponent {
       TAB_NAV_RIGHT: () => this.tabShift(1),
       NEW_AUDIO_TAB: () => this.addAudioTab(),
       NEW_GRAPHICS_TAB: () => this.addGraphicsTab(),
+      INCREASE_FONT_SIZE: () => this.increaseFontSize(),
+      DECREASE_FONT_SIZE: () => this.decreaseFontSize(),
     };
     this.keyShortcutSubscription = new Subscription('KEY_SHORTCUT', (msg) => {
       const action = eventMap[msg.shortcut];
@@ -42,6 +44,21 @@ export default class EditorWindow extends BaseComponent {
   disconnectedCallback() {
     eventBus.unsubscribe(this.keyShortcutSubscription);
     document.removeEventListener('SESSION_OPEN', this.onSessionOpen);
+  }
+
+  increaseFontSize() {
+    const { fontSize, } = store.projectSettings.value;
+    const adjustedFontSize = fontSize + 1;
+    store.projectSettings.setValue({ fontSize: adjustedFontSize, });
+  }
+
+  decreaseFontSize() {
+    const { fontSize, } = store.projectSettings.value;
+    if (fontSize <= 5) {
+      return;
+    }
+    const adjustedFontSize = fontSize - 1;
+    store.projectSettings.setValue({ fontSize: adjustedFontSize, });
   }
 
   addAudioTab(event, tabId = uuid(), defaultValue = '') {
